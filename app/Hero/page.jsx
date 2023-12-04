@@ -22,7 +22,7 @@ const Hero = () => {
 
         {/* Name and details on the right */}
         <div className="lg:w-1/2 text-center lg:ml-24 lg:text-left">
-        <h1 className=" font-mono text-6xl font-bold drop-shadow-lg text-gray-400">I'm</h1><br />
+        <h1 className=" font-mono text-6xl font-bold drop-shadow-lg text-gray-400">I am</h1><br />
         <LeftWrapper> 
           <h1 className="text-shadow-lg text-shadow-white  text-6xl font-bold mb-4 drop-shadow-2xl bg-gradient-to-r from-purple-900  to-pink-700 inline-block text-transparent bg-clip-text">Abhijith Shaji</h1>
           </LeftWrapper>
