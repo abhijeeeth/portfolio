@@ -13,7 +13,7 @@ const AboutMe = () => {
         I enjoy building web applications that are not only visually appealing but also deliver a great user experience. My focus is on creating clean, efficient, and maintainable code.
       </p>
       <p className="text-lg mb-4">
-        Whether it's crafting responsive user interfaces, optimizing performance, or collaborating with a team, I'm always eager to take on new challenges and learn new technologies.
+        Whether its crafting responsive user interfaces, optimizing performance, or collaborating with a team, I am always eager to take on new challenges and learn new technologies.
       </p>
       {/* Add more information or customize as needed */}
     </div>
