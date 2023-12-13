@@ -40,7 +40,7 @@ const Navbar = () => {
   };
 
       return (
-        <nav className="bg-gray-900/10 px-10 py-4 fixed w-screen z-50 ">
+        <nav className="bg-red-900/10 px-10 py-4 fixed w-screen z-50 mr-10 ">
       <div className="container mx-auto flex justify-between items-center">
         <Link href={'/'}>
         <div className="text-gray-200 hover:text-red-500 font-bold text-xl">Abhijith<span className='text-red-500 hover:text-gray-200 font-thin'>Shaji</span> </div>
@@ -78,27 +78,27 @@ const Navbar = () => {
           <div className="text-lg lg:flex-grow">
             <a
               href="/"
-              className="block mt-4 lg:inline-block lg:mt-0 text-gray-500 hover:text-gray-200 mr-4"
+              className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-gray-200 mr-4"
               >
               Home
             </a>
             <Link href={'/about'}>
             <p onClick={(e) => scrollToSection(e, 'about')}
-            className="block mt-4 lg:inline-block lg:mt-0 text-gray-500 hover:text-gray-200 mr-4"
+            className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-gray-200 mr-4"
             >
               About
             </p>
             </Link>
             <Link href={'/Projects'}>
             <p
-              onClick={(e) => scrollToSection(e, 'projects')} className="block mt-4 lg:inline-block lg:mt-0 text-gray-500 hover:text-gray-200"
+              onClick={(e) => scrollToSection(e, 'projects')} className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-gray-200"
               >
               Projects
             </p>
             </Link>
             <p
              onClick={(e) => scrollToSection(e, 'contact')}
-              className="block mx-4 mt-4 lg:inline-block lg:mt-0 text-gray-500 hover:text-gray-200"
+              className="block mx-4 mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-gray-200"
               >
               Contact
             </p>

@@ -8,7 +8,7 @@ import { LeftWrapper } from '../Components/LeftWrap';
 const Hero = () => {
   return (
     <div className="bg-transparent pb-24 pt-24">
-      <div className="container mx-auto flex flex-col lg:flex-row items-center lg:h-[500px] lg:mx-22">
+      <div className="container mx-auto flex flex-col lg:flex-row items-center lg:h-[500px] lg:mx-22 ">
         {/* Image on the left (visible on larger screens) */}
         <div className="lg:w-1/2 lg:mr-8 mb-4 lg:mb-0">
           <PageWrapper>
@@ -22,11 +22,11 @@ const Hero = () => {
 
         {/* Name and details on the right */}
         <div className="lg:w-1/2 text-center lg:ml-24 lg:text-left">
-        <h1 className=" font-mono text-6xl font-bold drop-shadow-lg text-gray-400">I am</h1><br />
+        <h1 className="font-cst text-6xl font-bold drop-shadow-lg text-gray-400">I am</h1><br />
         <LeftWrapper> 
-          <h1 className="text-shadow-lg text-shadow-white  text-6xl font-bold mb-4 drop-shadow-2xl bg-gradient-to-r from-purple-900  to-pink-700 inline-block text-transparent bg-clip-text">Abhijith Shaji</h1>
+          <h1 className="font-mono text-shadow-lg text-shadow-white  text-6xl font-bold mb-4 drop-shadow-2xl text-gray-600 ">Abhijith Shaji</h1>
           </LeftWrapper>
-          <p className="text-lg mb-8 text-white font-bold "><TypeAnimation
+          <p className="text-lg mb-8 text-white font-bold font-mono "><TypeAnimation
       sequence={[
         // Same substring at the start will only be typed out once, initially
         'Next.js Dev',
@@ -45,7 +45,7 @@ const Hero = () => {
     /></p>
           <div>
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/abhijeeeth"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-purple-900  to-pink-700 border  border-white text-white px-4 py-2 rounded-md shadow-lg shadow-orange-900"
@@ -53,7 +53,7 @@ const Hero = () => {
               GitHub
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/stabhijith/"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-purple-900  to-pink-700 border text-white px-4 py-2 rounded-md  ml-4 shadow-lg shadow-orange-900"
