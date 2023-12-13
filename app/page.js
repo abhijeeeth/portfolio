@@ -7,15 +7,7 @@ import Projects from "./Projects/page";
 import Skills from "./Skills/page";
 
 export default function Home() {
-  const skillsData = [
-    { name: 'JavaScript', progress: '80%' },
-    { name: 'React.js', progress: '90%' },
-    { name: 'Vue.js', progress: '70%' },
-    { name: 'Tailwind CSS', progress: '60%' },
-    { name: 'Next.js', progress: '75%' },
-    { name: 'git', progress: '75%' },
-    { name: 'HTML', progress: '100%' },
-  ];
+  
   
   return (
     <main style={{
@@ -26,7 +18,7 @@ export default function Home() {
       <QuiltedImageList/>
       <AboutMe/>
       <Projects/>
-      <Skills skills={skillsData} />
+      <Skills/>
       <ContactMe/>
     </main>
   )

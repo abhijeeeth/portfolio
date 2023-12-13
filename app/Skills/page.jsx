@@ -3,7 +3,16 @@
 import React from 'react';
 import { Container, Typography, Grid, LinearProgress } from '@mui/material';
 
-const Skills = ({ skills }) => {
+const Skills = () => {
+    const skills = [
+        { name: 'JavaScript', progress: '80%' },
+        { name: 'React.js', progress: '90%' },
+        { name: 'Vue.js', progress: '70%' },
+        { name: 'Tailwind CSS', progress: '60%' },
+        { name: 'Next.js', progress: '75%' },
+        { name: 'git', progress: '75%' },
+        { name: 'HTML', progress: '100%' },
+      ];
   return (
     <Container maxWidth="md" sx={{ my: 8 }} className='text-white bg-black/60 p-16'>
       <Typography variant="h3" fontWeight="bold" mb={4} className='text-center'>
