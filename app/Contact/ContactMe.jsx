@@ -30,7 +30,7 @@ const ContactMe = () => {
 
   return (
     <section id='contact' className='px-6'>
-    <div className="container mx-auto my-16 p-8 bg-black/50 rounded-lg shadow-lg text-white">
+    <div className="container mx-auto mt-16 p-8 bg-black/50 rounded-lg shadow-lg text-white">
       <h2 className="text-3xl font-bold mb-6">Contact Me</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
