@@ -26,7 +26,7 @@ const Projects = () => {
                 </div>
               </div>
               </a>
-              <a href="https://yum-eats-nine.vercel.app//">
+              <a href="https://morrisenglishacademy.com/">
               <div className="rounded-lg overflow-hidden bg-black/50 shadow-2xl hover:scale-110 transition-transform">
                 <img
                   src="https://img.freepik.com/free-photo/freshly-italian-pizza-with-mozzarella-cheese-slice-generative-ai_188544-12347.jpg?w=1380&t=st=1701603399~exp=1701603999~hmac=f7674bbfd329e56105863ced6468a309ac4c7ee69baa729fb37b3cda1f2206fd"
@@ -35,10 +35,10 @@ const Projects = () => {
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-white mb-2">
-                    Online Delivery Website
+                    MORRIS ANGLO-INDIAN ENGLISH ACADEMY
                   </h3>
                   <p className="text-white">
-                  Online Delivery Website.Created using React js and Tailwind CSS.
+                  Portfoliio Website for MORRIS ANGLO-INDIAN ENGLISH ACADEMY.
                   </p>
                 </div>
               </div>
@@ -55,8 +55,7 @@ const Projects = () => {
                     Commercial Site
                   </h3>
                   <p className="text-white">
-                    Description of Project 3. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit.
+                    Portfolio Website for Vyzonix , Development Progress
                   </p>
                 </div>
                 
