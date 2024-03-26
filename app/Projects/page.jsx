@@ -29,7 +29,7 @@ const Projects = () => {
               <a href="https://morrisenglishacademy.com/">
               <div className="rounded-lg overflow-hidden bg-black/50 shadow-2xl hover:scale-110 transition-transform">
                 <img
-                  src="https://img.freepik.com/free-photo/freshly-italian-pizza-with-mozzarella-cheese-slice-generative-ai_188544-12347.jpg?w=1380&t=st=1701603399~exp=1701603999~hmac=f7674bbfd329e56105863ced6468a309ac4c7ee69baa729fb37b3cda1f2206fd"
+                  src="https://www.valeem.com/wp-content/uploads/2022/11/394f5e0a9c4652eb784e4c8f62508e59.jpg"
                   alt="Project 2"
                   className="w-full h-48 object-cover"
                 />
@@ -52,7 +52,7 @@ const Projects = () => {
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-white mb-2">
-                    Commercial Site
+                    Vyzonix
                   </h3>
                   <p className="text-white">
                     Portfolio Website for Vyzonix , Development Progress
