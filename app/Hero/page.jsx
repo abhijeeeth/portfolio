@@ -7,7 +7,7 @@ import { LeftWrapper } from '../Components/LeftWrap';
 
 const Hero = () => {
   return (
-    <div className="bg-transparent py-24">
+    <div className="bg-black py-24">
       <div className="container mx-auto flex flex-col lg:flex-row items-center lg:h-[500px] lg:px-22">
         {/* Image on the left (visible on larger screens) */}
         <div className="lg:w-1/2 lg:mr-8 mb-4 lg:mb-0">
