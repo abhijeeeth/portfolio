@@ -1,90 +1,33 @@
 'use client'
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-const ContactMe = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await axios.post('/api/send-email', formData);
-      alert('Email sent successfully!');
-    } catch (error) {
-      console.error('Error sending email:', error);
-      alert('Failed to send email. Please try again later.');
-    }
-  };
-
+const Footer = () => {
   return (
-    <section id='contact' className='px-6'>
-    <div className="container mx-auto mt-16 p-8 bg-black/50 rounded-lg shadow-lg text-white">
-      <h2 className="text-3xl font-bold mb-6">Contact Me</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-lg font-medium text-gray-200">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="mt-1 p-2 w-full border rounded-md bg-gray-600/50"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-lg font-medium text-gray-200">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="mt-1 p-2 w-full border rounded-md  bg-gray-600/50"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="message" className="block text-lg font-medium text-gray-200">
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            rows="4"
-            className="mt-1 p-2 w-full border rounded-md  bg-gray-600/50"
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-        >
-          Send Message
-        </button>
-      </form>
-    </div>
-    </section>
+    <footer id='contact' className='px-6'>
+      <div className="container mx-auto mt-16 p-8 bg-gradient-to-r from-grey-900 via-grey-600 to-grey-500 rounded-lg shadow-2xl text-white">
+        <h2 className="text-4xl font-extrabold mb-6 text-center">Contact Me</h2>
+        <p className="mb-6 text-center text-lg">Feel free to reach out to me via email or follow me on social media.</p>
+        <ul className="flex justify-center space-x-6 mb-6">
+          <li>
+            <a href="mailto:st.abhijithh@gmail.com" className="text-lg font-medium text-white hover:text-gray-300 transition duration-300">
+              <i className="fas fa-envelope mr-2"></i> Email
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/abhijeeeth" className="text-lg font-medium text-white hover:text-gray-300 transition duration-300">
+              <i className="fab fa-github mr-2"></i> GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/stabhijith" className="text-lg font-medium text-white hover:text-gray-300 transition duration-300">
+              <i className="fab fa-linkedin mr-2"></i> LinkedIn
+            </a>
+          </li>
+        </ul>
+        <p className="text-center text-gray-200">&copy; {new Date().getFullYear()} Your Name. All rights reserved.</p>
+      </div>
+    </footer>
   );
 };
 
-export default ContactMe;
+export default Footer;
