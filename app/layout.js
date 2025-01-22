@@ -11,7 +11,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <script
+          type="text/javascript"
+          src="https://wati-integration-service.clare.ai/v2/watiWidget.js?Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxMWQ4ZTZlZS04NmI4LTQxZjYtOWFiMi1mZTNiNmFmZDYwNzYiLCJ1bmlxdWVfbmFtZSI6ImNoYXlhZ3JhaGFnYW5AZ21haWwuY29tIiwibmFtZWlkIjoiY2hheWFncmFoYWdhbkBnbWFpbC5jb20iLCJlbWFpbCI6ImNoYXlhZ3JhaGFnYW5AZ21haWwuY29tIiwiYXV0aF90aW1lIjoiMDEvMjEvMjAyNSAwNzoyNjowOCIsImRiX25hbWUiOiJ3YXRpX2FwcF90cmlhbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlRSSUFMIiwiZXhwIjoxNzM4MTA4ODAwLCJpc3MiOiJDbGFyZV9BSSIsImF1ZCI6IkNsYXJlX0FJIn0.LurqBno8-BboEEw2cCmG4OzUmkkSiUB11EE3H2OFEmA"
+          async
+        ></script>
+      </body>
     </html>
   )
 }
