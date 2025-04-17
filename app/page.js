@@ -42,16 +42,28 @@ const FloatingWhatsAppButton = () => {
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
+    const handleMouseOver = () => setIsHovering(true);
+    const handleMouseOut = () => setIsHovering(false);
+
     window.addEventListener('mousemove', updateMousePosition);
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseover', handleMouseOver);
+      el.addEventListener('mouseout', handleMouseOut);
+    });
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);
+      document.querySelectorAll('a, button').forEach(el => {
+        el.removeEventListener('mouseover', handleMouseOver);
+        el.removeEventListener('mouseout', handleMouseOut);
+      });
     };
   }, []);
 
@@ -64,23 +76,44 @@ export default function Home() {
         fontFamily: 'Arial, sans-serif',
       }}
     >
+      {/* Flutter-themed cursor */}
       <div
-        className="custom-cursor"
+        className="flutter-cursor"
         style={{
           position: 'fixed',
           left: mousePosition.x,
           top: mousePosition.y,
-          width: '20px',
-          height: '20px',
-          borderRadius: '50%',
-          backgroundColor: 'rgba(255, 255, 255, 0.3)',
-          boxShadow: '0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3)',
+          width: isHovering ? '40px' : '30px',
+          height: isHovering ? '40px' : '30px',
           transform: 'translate(-50%, -50%)',
           pointerEvents: 'none',
           zIndex: 9999,
-          transition: 'width 0.2s, height 0.2s',
+          transition: 'all 0.15s ease',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
-      />
+      >
+        {/* Flutter logo shape */}
+        <div style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(69, 209, 253, 0.2)',
+          clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
+          transform: 'rotate(45deg)',
+          boxShadow: '0 0 10px rgba(69, 209, 253, 0.5)',
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          width: '60%',
+          height: '60%',
+          backgroundColor: 'rgba(94, 53, 177, 0.3)',
+          clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
+          transform: 'rotate(45deg)',
+          boxShadow: '0 0 8px rgba(94, 53, 177, 0.6)',
+        }}></div>
+      </div>
       <Navbar />
       <Hero />
       <QuiltedImageList />
