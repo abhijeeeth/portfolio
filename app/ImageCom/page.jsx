@@ -1,3 +1,5 @@
+'use client'
+
 import { useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
