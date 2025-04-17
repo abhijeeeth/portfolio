@@ -9,10 +9,10 @@ const ContactMe = () => {
   return (
     <footer id='contact' className='px-6 min-h-[50vh]'>
       <div className="container mx-auto mt-16 p-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl shadow-2xl text-white border border-gray-700">
-        <h2 className="text-4xl font-extrabold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Let's Connect</h2>
+        <h2 className="text-4xl font-extrabold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Lets Connect</h2>
 
         <p className="mb-8 text-center text-lg font-light max-w-2xl mx-auto leading-relaxed">
-          I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+          Im always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
         </p>
 
         <div className="flex flex-wrap justify-center gap-8 mb-10">

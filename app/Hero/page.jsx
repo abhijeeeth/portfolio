@@ -56,7 +56,7 @@ const Hero = () => {
               transition={{ delay: 0.6 }}
               className="text-xl lg:text-3xl mb-8 text-gray-300 font-sans"
             >
-              <span className="text-white font-medium">I'm a </span>
+              <span className="text-white font-medium">Im a </span>
               <TypeAnimation
                 sequence={[
                   "Flutter Developer",
