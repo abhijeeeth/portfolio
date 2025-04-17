@@ -42,28 +42,86 @@ const FloatingWhatsAppButton = () => {
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [planePosition, setPlanePosition] = useState({ x: 0, y: 0 });
+  const [planeVelocity, setPlaneVelocity] = useState({ x: 0, y: 0 });
+  const [planeAngle, setPlaneAngle] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-  const [binaryDigits, setBinaryDigits] = useState([]);
+  const [trailPoints, setTrailPoints] = useState([]);
 
   useEffect(() => {
-    // Generate random binary digits for the matrix effect
-    const generateBinaryDigits = () => {
-      const newDigits = [];
-      for (let i = 0; i < 15; i++) { // Reduced number of digits
-        newDigits.push({
-          value: Math.random() > 0.5 ? '1' : '0',
-          x: (Math.random() * 60) - 30,
-          y: (Math.random() * 60) - 30,
-          opacity: Math.random() * 0.7 + 0.3, // More visible digits
-          size: Math.random() * 10 + 8
+    // Physics constants
+    const SPRING = 0.05; // How strongly the plane is pulled toward the cursor
+    const DAMPING = 0.75; // Resistance/friction factor
+    const MAX_SPEED = 15; // Maximum speed the plane can travel
+    const ROTATION_SPEED = 0.2; // How quickly the plane rotates to face direction
+
+    // Initialize plane position if needed
+    if (planePosition.x === 0 && planePosition.y === 0 && mousePosition.x !== 0) {
+      setPlanePosition({ x: mousePosition.x, y: mousePosition.y });
+    }
+
+    // Physics animation frame
+    const animationId = requestAnimationFrame(() => {
+      if (mousePosition.x === 0) return; // Skip if mouse position isn't initialized
+
+      // Calculate vector from plane to cursor
+      const dx = mousePosition.x - planePosition.x;
+      const dy = mousePosition.y - planePosition.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      // Calculate desired angle based on velocity direction
+      const targetAngle = Math.atan2(planeVelocity.y, planeVelocity.x) * (180 / Math.PI);
+
+      // Apply spring force (attraction to cursor)
+      let velX = planeVelocity.x + dx * SPRING;
+      let velY = planeVelocity.y + dy * SPRING;
+
+      // Apply damping (air resistance)
+      velX *= DAMPING;
+      velY *= DAMPING;
+
+      // Limit maximum speed
+      const speed = Math.sqrt(velX * velX + velY * velY);
+      if (speed > MAX_SPEED) {
+        const ratio = MAX_SPEED / speed;
+        velX *= ratio;
+        velY *= ratio;
+      }
+
+      // Update plane position
+      const newPosX = planePosition.x + velX;
+      const newPosY = planePosition.y + velY;
+
+      // Smoothly rotate plane to match velocity direction
+      if (Math.abs(velX) > 0.1 || Math.abs(velY) > 0.1) {
+        const currentAngle = planeAngle;
+        const angleDiff = targetAngle - currentAngle;
+
+        // Normalize angle difference to -180 to 180 range
+        let normalizedDiff = angleDiff;
+        while (normalizedDiff > 180) normalizedDiff -= 360;
+        while (normalizedDiff < -180) normalizedDiff += 360;
+
+        // Apply rotation with easing
+        setPlaneAngle(currentAngle + normalizedDiff * ROTATION_SPEED);
+      }
+
+      // Update state
+      setPlaneVelocity({ x: velX, y: velY });
+      setPlanePosition({ x: newPosX, y: newPosY });
+
+      // Add trail points when the plane is moving at sufficient speed
+      if (speed > 2) {
+        setTrailPoints(prev => {
+          const newTrail = [...prev, { x: newPosX, y: newPosY }];
+          // Keep trail at reasonable length
+          if (newTrail.length > 15) {
+            return newTrail.slice(newTrail.length - 15);
+          }
+          return newTrail;
         });
       }
-      setBinaryDigits(newDigits);
-    };
-
-    generateBinaryDigits();
-    // Increase interval to 1500ms (1.5 seconds) for slower animation
-    const intervalId = setInterval(generateBinaryDigits, 1500);
+    });
 
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -79,14 +137,14 @@ export default function Home() {
     });
 
     return () => {
-      clearInterval(intervalId);
+      cancelAnimationFrame(animationId);
       window.removeEventListener('mousemove', updateMousePosition);
       document.querySelectorAll('a, button').forEach(el => {
         el.removeEventListener('mouseover', handleMouseOver);
         el.removeEventListener('mouseout', handleMouseOut);
       });
     };
-  }, []);
+  }, [mousePosition, planePosition, planeVelocity, planeAngle, trailPoints]);
 
   return (
     <main
@@ -97,66 +155,134 @@ export default function Home() {
         fontFamily: 'Arial, sans-serif',
       }}
     >
-      {/* Flutter-themed matrix cursor */}
-      <div
-        className="flutter-matrix-cursor"
-        style={{
-          position: 'fixed',
-          left: mousePosition.x,
-          top: mousePosition.y,
-          width: isHovering ? '80px' : '60px',
-          height: isHovering ? '80px' : '60px',
-          transform: 'translate(-50%, -50%)',
-          pointerEvents: 'none',
-          zIndex: 9999,
-          transition: 'width 0.3s, height 0.3s, left 0.1s, top 0.1s', // Smoother transition
-        }}
-      >
-        {/* Flutter logo base */}
+      {/* Bird with physics and trail */}
+      <div style={{ position: 'fixed', pointerEvents: 'none', zIndex: 9999, top: 0, left: 0, width: '100%', height: '100%' }}>
+        {/* Trail effect */}
+        {trailPoints.length > 1 && (
+          <svg width="100%" height="100%" style={{ position: 'absolute', top: 0, left: 0 }}>
+            <path
+              d={`M ${trailPoints[0].x} ${trailPoints[0].y} ${trailPoints.slice(1).map(p => `L ${p.x} ${p.y}`).join(' ')}`}
+              stroke="rgba(180, 220, 250, 0.2)"
+              strokeWidth="5"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <path
+              d={`M ${trailPoints[0].x} ${trailPoints[0].y} ${trailPoints.slice(1).map(p => `L ${p.x} ${p.y}`).join(' ')}`}
+              stroke="rgba(255, 255, 255, 0.4)"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="3,5"
+              strokeLinecap="round"
+            />
+          </svg>
+        )}
+
+        {/* Bird Drawing */}
         <div style={{
           position: 'absolute',
-          width: '100%',
-          height: '100%',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(69, 209, 253, 0.2) 0%, rgba(69, 209, 253, 0) 70%)',
-          boxShadow: '0 0 15px rgba(69, 209, 253, 0.3)',
-        }}></div>
-
-        {/* Inner Flutter shape */}
-        <div style={{
-          position: 'absolute',
-          width: '40%',
-          height: '40%',
-          left: '30%',
-          top: '30%',
-          backgroundColor: 'rgba(94, 53, 177, 0.4)',
-          clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
-          transform: 'rotate(45deg)',
-          boxShadow: '0 0 10px rgba(94, 53, 177, 0.7)',
-        }}></div>
-
-        {/* Binary matrix digits */}
-        {binaryDigits.map((digit, index) => (
-          <div
-            key={index}
+          left: `${planePosition.x}px`,
+          top: `${planePosition.y}px`,
+          transform: `translate(-50%, -50%) rotate(${planeAngle}deg)`,
+          transition: 'width 0.3s, height 0.3s',
+        }}>
+          <svg
+            width={isHovering ? "45" : "35"}
+            height={isHovering ? "45" : "35"}
+            viewBox="0 0 40 30"
             style={{
-              position: 'absolute',
-              left: `calc(50% + ${digit.x}px)`,
-              top: `calc(50% + ${digit.y}px)`,
-              color: index % 2 === 0 ? '#45D1FD' : '#5E35B1',
-              opacity: digit.opacity,
-              fontSize: `${digit.size}px`,
-              fontFamily: 'monospace',
-              fontWeight: 'bold',
-              textShadow: `0 0 5px ${index % 2 === 0 ? '#45D1FD' : '#5E35B1'}`,
-              transform: 'translate(-50%, -50%)',
-              transition: 'opacity 0.5s', // Smoother opacity changes
+              filter: 'drop-shadow(0px 2px 3px rgba(0,0,0,0.3))',
+              transition: 'width 0.3s, height 0.3s'
             }}
           >
-            {digit.value}
-          </div>
-        ))}
+            {/* Bird animation - wings flap based on velocity */}
+            <g transform={`translate(20, 15) scale(${0.8 + Math.sin(Date.now() / 200) * 0.1})`}>
+              {/* Bird body */}
+              <ellipse
+                cx="0" cy="0"
+                rx="12" ry="6"
+                fill="#4a88ca"
+                stroke="#2c5079"
+                strokeWidth="1"
+              />
+
+              {/* Head */}
+              <circle
+                cx="11" cy="-2"
+                r="7"
+                fill="#4a88ca"
+                stroke="#2c5079"
+                strokeWidth="1"
+              />
+
+              {/* Eye */}
+              <circle
+                cx="13" cy="-3"
+                r="1.5"
+                fill="white"
+              />
+              <circle
+                cx="13.5" cy="-3"
+                r="0.8"
+                fill="black"
+              />
+
+              {/* Beak */}
+              <path
+                d="M 17,-3 L 22,0 L 17,2"
+                fill="#f0c040"
+                stroke="#e0a020"
+                strokeWidth="0.5"
+                strokeLinejoin="round"
+              />
+
+              {/* Wings */}
+              <path
+                d={`M -2,-3 Q ${-8 - Math.sin(Date.now() / 150) * 4},-${8 + Math.sin(Date.now() / 150) * 3} -2,3`}
+                fill="#5098da"
+                stroke="#2c5079"
+                strokeWidth="1"
+              />
+              <path
+                d={`M 2,-3 Q ${8 + Math.sin(Date.now() / 200) * 4},-${10 + Math.sin(Date.now() / 200) * 3} 2,3`}
+                fill="#3878ba"
+                stroke="#2c5079"
+                strokeWidth="1"
+              />
+
+              {/* Tail feathers */}
+              <path
+                d="M -12,0 L -20,-4 L -20,0 L -20,4"
+                fill="#5098da"
+                stroke="#2c5079"
+                strokeWidth="1"
+                strokeLinejoin="round"
+              />
+
+              {/* Small details - feather textures */}
+              <path
+                d="M 5,-2 C 3,0 3,2 5,4"
+                stroke="#3878ba"
+                strokeWidth="0.5"
+                fill="none"
+              />
+              <path
+                d="M 0,-2 C -2,0 -2,2 0,4"
+                stroke="#3878ba"
+                strokeWidth="0.5"
+                fill="none"
+              />
+              <path
+                d="M 7,-5 C 9,-4 10,-3 11,-1"
+                stroke="#3878ba"
+                strokeWidth="0.5"
+                fill="none"
+              />
+            </g>
+          </svg>
+        </div>
       </div>
+
       <Navbar />
       <Hero />
       <QuiltedImageList />
