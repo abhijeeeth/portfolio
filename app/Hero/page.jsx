@@ -875,7 +875,7 @@ const Hero = () => {
                       <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-red-400">Time's Up!</h3>
+                  <h3 className="text-xl font-bold text-red-400">Time&apos;s Up!</h3>
                   <p className="text-gray-300 text-sm mt-2">You ran out of time for this challenge.</p>
 
                   <div className="mt-4 p-3 bg-black/20 rounded text-left text-xs text-gray-400 font-mono">
