@@ -259,7 +259,7 @@ const Hero = () => {
       {/* Dynamic background with code patterns */}
       <div className="absolute inset-0 z-0 opacity-10">
         <div className="absolute inset-0" style={{
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          backgroundImage: "url(&quot;data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;)",
           backgroundSize: '60px 60px',
         }} />
       </div>
@@ -326,7 +326,7 @@ const Hero = () => {
           }}
           transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
         >
-          "
+          &quot;
         </motion.div>
         <motion.div
           className="absolute right-[8%] bottom-[30%] text-blue-500/30 font-serif text-9xl opacity-25 transform rotate-12"
@@ -336,7 +336,7 @@ const Hero = () => {
           }}
           transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
         >
-          "
+          &quot;
         </motion.div>
 
         {/* Added more decorative SVG elements */}
@@ -1014,7 +1014,7 @@ const Hero = () => {
                   <p className="text-2xl font-bold text-white">{gameScore}/{codePuzzles.length}</p>
                   <p className="text-gray-300 text-sm mt-2">
                     {gameScore === codePuzzles.length
-                      ? 'Perfect score! You\'re a coding genius!'
+                      ? 'Perfect score! You&apos;re a coding genius!'
                       : 'Great effort! Keep practicing to improve.'}
                   </p>
                 </motion.div>
