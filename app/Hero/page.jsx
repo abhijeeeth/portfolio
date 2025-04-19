@@ -15,7 +15,13 @@ const Hero = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 500]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+  // Add state to track if we're in the browser
+  const [isBrowser, setIsBrowser] = useState(false);
+
   useEffect(() => {
+    // Set isBrowser to true once component mounts in browser
+    setIsBrowser(true);
+
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -25,9 +31,11 @@ const Hero = () => {
   }, []);
 
   const calculateMovement = (axis, factor = 20) => {
+    if (!isBrowser) return 0;
+
     return axis === 'x'
-      ? (mousePosition.x / window.innerWidth - 0.5) * factor
-      : (mousePosition.y / window.innerHeight - 0.5) * factor;
+      ? (mousePosition.x / (window?.innerWidth || 1) - 0.5) * factor
+      : (mousePosition.y / (window?.innerHeight || 1) - 0.5) * factor;
   };
 
   // New code puzzle game state
@@ -136,7 +144,9 @@ const Hero = () => {
   // Toggle game visibility
   const toggleGame = () => {
     if (showGame) {
-      clearInterval(timerRef.current);
+      if (timerRef.current && isBrowser) {
+        clearInterval(timerRef.current);
+      }
       setShowGame(false);
     } else {
       setShowGame(true);
@@ -152,16 +162,23 @@ const Hero = () => {
     setGameStatus('intro');
     setErrorMessage('');
     setTimer(0);
-    clearInterval(timerRef.current);
+    if (timerRef.current && isBrowser) {
+      clearInterval(timerRef.current);
+    }
   };
 
   // Start the coding challenge
   const startGame = () => {
+    if (!isBrowser) return;
+
     setCurrentPuzzle(codePuzzles[puzzleIndex]);
     setGameStatus('playing');
     setTimer(60); // 60 second timer per puzzle
 
-    clearInterval(timerRef.current);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+
     timerRef.current = setInterval(() => {
       setTimer(prev => {
         if (prev <= 1) {
@@ -176,11 +193,13 @@ const Hero = () => {
 
   // Check the user's answer
   const checkAnswer = () => {
-    if (!currentPuzzle) return;
+    if (!currentPuzzle || !isBrowser) return;
 
     if (currentPuzzle.verify(userAnswer)) {
       // Correct answer
-      clearInterval(timerRef.current);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
       setGameScore(prev => prev + 1);
 
       if (puzzleIndex >= codePuzzles.length - 1) {
@@ -197,7 +216,10 @@ const Hero = () => {
           setTimer(60);
 
           // Restart timer for next puzzle
-          clearInterval(timerRef.current);
+          if (timerRef.current) {
+            clearInterval(timerRef.current);
+          }
+
           timerRef.current = setInterval(() => {
             setTimer(prev => {
               if (prev <= 1) {
@@ -225,6 +247,8 @@ const Hero = () => {
 
   // Load next puzzle or restart the game
   const handleNextPuzzle = () => {
+    if (!isBrowser) return;
+
     if (gameStatus === 'completed') {
       resetGame();
     } else {
@@ -235,7 +259,10 @@ const Hero = () => {
       setTimer(60);
 
       // Restart timer
-      clearInterval(timerRef.current);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+
       timerRef.current = setInterval(() => {
         setTimer(prev => {
           if (prev <= 1) {
@@ -251,8 +278,12 @@ const Hero = () => {
 
   // Cleanup timer on component unmount
   useEffect(() => {
-    return () => clearInterval(timerRef.current);
-  }, []);
+    return () => {
+      if (timerRef.current && isBrowser) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [isBrowser]);
 
   return (
     <div ref={containerRef} className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
@@ -1039,23 +1070,27 @@ const Hero = () => {
       </motion.div>
 
       {/* Custom cursor effect */}
-      <div
-        className="fixed w-6 h-6 rounded-full border-2 border-blue-500/50 pointer-events-none z-50 hidden lg:block"
-        style={{
-          left: `${mousePosition.x}px`,
-          top: `${mousePosition.y}px`,
-          transform: 'translate(-50%, -50%)',
-          transition: 'transform 0.1s ease'
-        }}
-      ></div>
-      <div
-        className="fixed w-2 h-2 rounded-full bg-blue-500 pointer-events-none z-50 hidden lg:block"
-        style={{
-          left: `${mousePosition.x}px`,
-          top: `${mousePosition.y}px`,
-          transform: 'translate(-50%, -50%)'
-        }}
-      ></div>
+      {isBrowser && (
+        <>
+          <div
+            className="fixed w-6 h-6 rounded-full border-2 border-blue-500/50 pointer-events-none z-50 hidden lg:block"
+            style={{
+              left: `${mousePosition.x}px`,
+              top: `${mousePosition.y}px`,
+              transform: 'translate(-50%, -50%)',
+              transition: 'transform 0.1s ease'
+            }}
+          ></div>
+          <div
+            className="fixed w-2 h-2 rounded-full bg-blue-500 pointer-events-none z-50 hidden lg:block"
+            style={{
+              left: `${mousePosition.x}px`,
+              top: `${mousePosition.y}px`,
+              transform: 'translate(-50%, -50%)'
+            }}
+          ></div>
+        </>
+      )}
     </div>
   );
 };
