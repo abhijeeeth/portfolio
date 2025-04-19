@@ -758,7 +758,7 @@ const Hero = () => {
 
                   <h3 className="text-xl font-bold text-blue-400 mb-3">Coding Challenge</h3>
                   <p className="text-gray-300 text-sm mb-3">
-                    Test your coding skills by solving JavaScript challenges. You'll have 60 seconds for each puzzle.
+                    Test your coding skills by solving JavaScript challenges. Youll have 60 seconds for each puzzle.
                   </p>
                   <div className="text-xs text-gray-400 p-2 bg-black/30 rounded font-mono mb-3">
                     Complete the missing code to make the function work as expected.
