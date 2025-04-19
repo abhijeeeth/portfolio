@@ -227,6 +227,29 @@ const Hero = () => {
         }} />
       </div>
 
+      {/* Added more decorative SVG elements to the background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[20%] left-[10%] opacity-10">
+          <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M16 16v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"></path>
+            <path d="M9 10h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2z"></path>
+          </svg>
+        </div>
+        <div className="absolute bottom-[15%] right-[15%] opacity-10">
+          <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div className="absolute top-[50%] right-[20%] opacity-10">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v8"></path>
+            <path d="M8 12h8"></path>
+          </svg>
+        </div>
+      </div>
+
       {/* Animated floating elements */}
       <motion.div
         className="absolute w-96 h-96 rounded-full bg-blue-600/10 blur-3xl"
@@ -277,6 +300,33 @@ const Hero = () => {
           transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
         >
           "
+        </motion.div>
+
+        {/* Added more decorative SVG elements */}
+        <motion.div
+          className="absolute left-[15%] bottom-[20%] opacity-20"
+          animate={{
+            y: [0, -10, 0],
+            rotate: [0, 5, 0],
+          }}
+          transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </motion.div>
+        <motion.div
+          className="absolute right-[25%] top-[15%] opacity-20"
+          animate={{
+            y: [0, 10, 0],
+            rotate: [0, -5, 0],
+          }}
+          transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 10h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v6H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v6a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-6h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2z"></path>
+          </svg>
         </motion.div>
       </div>
 
@@ -474,6 +524,32 @@ const Hero = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.1, duration: 0.5 }}
               ></motion.div>
+
+              {/* Added more decorative SVG elements */}
+              <motion.div
+                className="absolute top-1/4 left-1/4 opacity-30"
+                animate={{
+                  rotate: [0, 360],
+                }}
+                transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="6"></circle>
+                  <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+              </motion.div>
+              <motion.div
+                className="absolute bottom-1/3 right-1/3 opacity-30"
+                animate={{
+                  rotate: [0, -360],
+                }}
+                transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -523,12 +599,31 @@ const Hero = () => {
             {gameStatus === 'intro' && (
               <div className="p-6 flex flex-col items-center">
                 <motion.div
-                  className="bg-blue-500/10 p-5 rounded-lg mb-6 w-full border border-blue-500/20"
+                  className="bg-blue-500/10 p-5 rounded-lg mb-6 w-full border border-blue-500/20 relative"
                   animate={{
                     boxShadow: ['0 0 0 rgba(59, 130, 246, 0.1)', '0 0 20px rgba(59, 130, 246, 0.2)', '0 0 0 rgba(59, 130, 246, 0.1)']
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
+                  {/* Added decorative SVG elements to intro screen */}
+                  <div className="absolute -top-3 -right-3 opacity-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 8v4"></path>
+                      <path d="M12 16h.01"></path>
+                    </svg>
+                  </div>
+                  <div className="absolute -bottom-3 -left-3 opacity-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                      <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                      <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                      <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                      <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                      <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                  </div>
+
                   <h3 className="text-xl font-bold text-blue-400 mb-3">Coding Challenge</h3>
                   <p className="text-gray-300 text-sm mb-3">
                     Test your coding skills by solving JavaScript challenges. You'll have 60 seconds for each puzzle.
@@ -681,31 +776,129 @@ const Hero = () => {
 
             {/* Game completed screen */}
             {gameStatus === 'completed' && (
-              <div className="p-6 text-center">
+              <div className="p-6 text-center relative">
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   className="mb-4"
                 >
-                  <div className="w-20 h-20 mx-auto bg-blue-500/20 rounded-full flex items-center justify-center mb-3">
+                  <div className="w-20 h-20 mx-auto bg-blue-500/20 rounded-full flex items-center justify-center mb-3 relative">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                     </svg>
+
+                    {/* Added animated rings around the star */}
+                    <motion.div
+                      className="absolute inset-0 rounded-full border border-blue-400/30"
+                      animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
+                      transition={{ repeat: Infinity, duration: 2 }}
+                    ></motion.div>
+                    <motion.div
+                      className="absolute inset-0 rounded-full border border-blue-400/20"
+                      animate={{ scale: [1, 1.8, 1], opacity: [1, 0, 1] }}
+                      transition={{ repeat: Infinity, duration: 2.5, delay: 0.2 }}
+                    ></motion.div>
                   </div>
+
+                  {/* Existing decorative SVG elements */}
+                  <div className="absolute top-4 right-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400 opacity-50">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                  </div>
+                  <div className="absolute bottom-6 left-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400 opacity-50">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div className="absolute top-12 left-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-400 opacity-40">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                  </div>
+                  <div className="absolute bottom-12 right-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-400 opacity-40">
+                      <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                      <line x1="16" y1="8" x2="2" y2="22"></line>
+                      <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                    </svg>
+                  </div>
+
+                  {/* Added confetti-like SVG elements */}
+                  <motion.div
+                    className="absolute top-2 left-1/4 text-yellow-400 opacity-60"
+                    animate={{
+                      y: [0, 10, 0],
+                      rotate: [0, 15, 0]
+                    }}
+                    transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </motion.div>
+                  <motion.div
+                    className="absolute top-10 right-1/4 text-blue-400 opacity-60"
+                    animate={{
+                      y: [0, -15, 0],
+                      rotate: [0, -20, 0]
+                    }}
+                    transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                      <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                  </motion.div>
+                  <motion.div
+                    className="absolute bottom-10 left-10 text-green-400 opacity-60"
+                    animate={{
+                      y: [0, 12, 0],
+                      x: [0, 5, 0],
+                      rotate: [0, 30, 0]
+                    }}
+                    transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    </svg>
+                  </motion.div>
+                  <motion.div
+                    className="absolute top-14 right-5 text-purple-400 opacity-60"
+                    animate={{
+                      y: [0, -10, 0],
+                      x: [0, -8, 0],
+                      rotate: [0, -25, 0]
+                    }}
+                    transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    </svg>
+                  </motion.div>
+
                   <h3 className="text-xl font-bold text-blue-400 mb-1">Challenge Complete!</h3>
                   <p className="text-2xl font-bold text-white">{gameScore}/{codePuzzles.length}</p>
                   <p className="text-gray-300 text-sm mt-2">
                     {gameScore === codePuzzles.length
-                      ? 'Perfect score! Youre a coding genius!'
+                      ? 'Perfect score! You\'re a coding genius!'
                       : 'Great effort! Keep practicing to improve.'}
                   </p>
                 </motion.div>
 
                 <button
-                  className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors relative group overflow-hidden"
                   onClick={resetGame}
                 >
-                  Play Again
+                  <span className="relative z-10">Play Again</span>
+                  <div className="absolute inset-0 bg-blue-700 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+
+                  {/* Added SVG to button */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block ml-2 relative z-10">
+                    <path d="M23 4v6h-6"></path>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                  </svg>
                 </button>
               </div>
             )}
