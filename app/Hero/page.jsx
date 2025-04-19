@@ -30,6 +30,193 @@ const Hero = () => {
       : (mousePosition.y / window.innerHeight - 0.5) * factor;
   };
 
+  // New code puzzle game state
+  const [showGame, setShowGame] = useState(false);
+  const [gameScore, setGameScore] = useState(0);
+  const [currentPuzzle, setCurrentPuzzle] = useState(null);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [gameStatus, setGameStatus] = useState('intro'); // 'intro', 'playing', 'success', 'failure'
+  const [errorMessage, setErrorMessage] = useState('');
+  const [puzzleIndex, setPuzzleIndex] = useState(0);
+  const [timer, setTimer] = useState(0);
+  const gameAreaRef = useRef(null);
+  const timerRef = useRef(null);
+
+  // Collection of coding puzzles
+  const codePuzzles = [
+    {
+      title: "String Reversal",
+      description: "Complete the function to reverse the input string",
+      code: `function reverseString(str) {\n  // Your code here\n  \n}`,
+      solution: `function reverseString(str) {\n  return str.split('').reverse().join('');\n}`,
+      test: `reverseString('hello')`,
+      expectedOutput: `'olleh'`,
+      verify: answer => {
+        try {
+          // Remove surrounding quotes if present (user might add them)
+          const cleanAnswer = answer.replace(/^['"](.*)['"]$/, '$1');
+          return cleanAnswer === 'olleh';
+        } catch (e) {
+          return false;
+        }
+      },
+      hint: "Try using string methods like split(), reverse(), and join()"
+    },
+    {
+      title: "Calculate Sum",
+      description: "Complete the function to calculate the sum of all numbers in the array",
+      code: `function sumArray(numbers) {\n  // Your code here\n  \n}`,
+      solution: `function sumArray(numbers) {\n  return numbers.reduce((sum, num) => sum + num, 0);\n}`,
+      test: `sumArray([1, 2, 3, 4, 5])`,
+      expectedOutput: `15`,
+      verify: answer => {
+        try {
+          return Number(answer) === 15;
+        } catch (e) {
+          return false;
+        }
+      },
+      hint: "Try using array methods like reduce() or a for loop"
+    },
+    {
+      title: "Find Maximum",
+      description: "Complete the function to find the maximum value in the array",
+      code: `function findMax(numbers) {\n  // Your code here\n  \n}`,
+      solution: `function findMax(numbers) {\n  return Math.max(...numbers);\n}`,
+      test: `findMax([3, 7, 2, 9, 1])`,
+      expectedOutput: `9`,
+      verify: answer => {
+        try {
+          return Number(answer) === 9;
+        } catch (e) {
+          return false;
+        }
+      },
+      hint: "Try using Math.max() or a comparison loop"
+    }
+  ];
+
+  // Toggle game visibility
+  const toggleGame = () => {
+    if (showGame) {
+      clearInterval(timerRef.current);
+      setShowGame(false);
+    } else {
+      setShowGame(true);
+      resetGame();
+    }
+  };
+
+  // Reset the game state
+  const resetGame = () => {
+    setPuzzleIndex(0);
+    setGameScore(0);
+    setUserAnswer('');
+    setGameStatus('intro');
+    setErrorMessage('');
+    setTimer(0);
+    clearInterval(timerRef.current);
+  };
+
+  // Start the coding challenge
+  const startGame = () => {
+    setCurrentPuzzle(codePuzzles[puzzleIndex]);
+    setGameStatus('playing');
+    setTimer(60); // 60 second timer per puzzle
+
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTimer(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current);
+          setGameStatus('failure');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  // Check the user's answer
+  const checkAnswer = () => {
+    if (!currentPuzzle) return;
+
+    if (currentPuzzle.verify(userAnswer)) {
+      // Correct answer
+      clearInterval(timerRef.current);
+      setGameScore(prev => prev + 1);
+
+      if (puzzleIndex >= codePuzzles.length - 1) {
+        // Game completed
+        setGameStatus('completed');
+      } else {
+        // Move to next puzzle
+        setGameStatus('success');
+        setTimeout(() => {
+          setPuzzleIndex(prev => prev + 1);
+          setUserAnswer('');
+          setCurrentPuzzle(codePuzzles[puzzleIndex + 1]);
+          setGameStatus('playing');
+          setTimer(60);
+
+          // Restart timer for next puzzle
+          clearInterval(timerRef.current);
+          timerRef.current = setInterval(() => {
+            setTimer(prev => {
+              if (prev <= 1) {
+                clearInterval(timerRef.current);
+                setGameStatus('failure');
+                return 0;
+              }
+              return prev - 1;
+            });
+          }, 1000);
+        }, 2000);
+      }
+    } else {
+      // Wrong answer
+      setErrorMessage('Try again! Your answer is not correct.');
+      setTimeout(() => setErrorMessage(''), 3000);
+    }
+  };
+
+  // Show solution for current puzzle
+  const showSolution = () => {
+    if (!currentPuzzle) return;
+    setUserAnswer(currentPuzzle.solution.split('\n').slice(1, -1).join('\n').trim());
+  };
+
+  // Load next puzzle or restart the game
+  const handleNextPuzzle = () => {
+    if (gameStatus === 'completed') {
+      resetGame();
+    } else {
+      setPuzzleIndex(prev => prev + 1);
+      setUserAnswer('');
+      setCurrentPuzzle(codePuzzles[puzzleIndex + 1]);
+      setGameStatus('playing');
+      setTimer(60);
+
+      // Restart timer
+      clearInterval(timerRef.current);
+      timerRef.current = setInterval(() => {
+        setTimer(prev => {
+          if (prev <= 1) {
+            clearInterval(timerRef.current);
+            setGameStatus('failure');
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+  };
+
+  // Cleanup timer on component unmount
+  useEffect(() => {
+    return () => clearInterval(timerRef.current);
+  }, []);
+
   return (
     <div ref={containerRef} className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
       {/* Dynamic background with code patterns */}
@@ -90,108 +277,6 @@ const Hero = () => {
           transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
         >
           "
-        </motion.div>
-
-        {/* Enhanced Photography elements - lens aperture SVG */}
-        <motion.div
-          className="absolute left-[70%] top-[15%] opacity-25"
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
-        >
-          <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
-            <circle cx="90" cy="90" r="60" stroke="#3b82f6" strokeWidth="1" />
-            <circle cx="90" cy="90" r="45" stroke="#3b82f6" strokeWidth="1" />
-            <circle cx="90" cy="90" r="30" stroke="#3b82f6" strokeWidth="1" />
-            <circle cx="90" cy="90" r="15" stroke="#3b82f6" strokeWidth="1" />
-            <path d="M90 30L90 150" stroke="#3b82f6" strokeWidth="0.5" />
-            <path d="M150 90L30 90" stroke="#3b82f6" strokeWidth="0.5" />
-            <path d="M130.7 49.3L49.3 130.7" stroke="#3b82f6" strokeWidth="0.5" />
-            <path d="M130.7 130.7L49.3 49.3" stroke="#3b82f6" strokeWidth="0.5" />
-            <path d="M115.3 39.5L64.7 140.5" stroke="#3b82f6" strokeWidth="0.5" strokeDasharray="4,4" />
-            <path d="M140.5 64.7L39.5 115.3" stroke="#3b82f6" strokeWidth="0.5" strokeDasharray="4,4" />
-            <path d="M39.5 64.7L140.5 115.3" stroke="#3b82f6" strokeWidth="0.5" strokeDasharray="4,4" />
-            <path d="M64.7 39.5L115.3 140.5" stroke="#3b82f6" strokeWidth="0.5" strokeDasharray="4,4" />
-          </svg>
-        </motion.div>
-
-        {/* Enhanced Flutter elements - more detailed flutter logo pattern */}
-        <motion.div
-          className="absolute left-[8%] bottom-[18%] opacity-15"
-          animate={{
-            rotate: [0, 10, 0, -10, 0],
-          }}
-          transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }}
-        >
-          <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
-            <path d="M40 120L80 80L120 120H40Z" fill="#3b82f6" fillOpacity="0.4" />
-            <path d="M40 40L80 80L120 40H40Z" fill="#3b82f6" fillOpacity="0.6" />
-            <path d="M80 80L40 40L40 120L80 80Z" fill="#3b82f6" fillOpacity="0.5" />
-            <path d="M120 40L120 120" stroke="#3b82f6" strokeWidth="1" strokeOpacity="0.3" />
-            <path d="M80 80L120 40" stroke="#3b82f6" strokeWidth="2" strokeOpacity="0.5" />
-            <path d="M80 80L120 120" stroke="#3b82f6" strokeWidth="2" strokeOpacity="0.5" />
-            <circle cx="120" cy="40" r="4" fill="#3b82f6" fillOpacity="0.5" />
-            <circle cx="120" cy="120" r="4" fill="#3b82f6" fillOpacity="0.5" />
-            <circle cx="40" cy="40" r="4" fill="#3b82f6" fillOpacity="0.5" />
-            <circle cx="40" cy="120" r="4" fill="#3b82f6" fillOpacity="0.5" />
-            <circle cx="80" cy="80" r="4" fill="#3b82f6" fillOpacity="0.7" />
-          </svg>
-        </motion.div>
-
-        {/* Code brackets SVG */}
-        <motion.div
-          className="absolute right-[12%] top-[60%] opacity-15"
-          animate={{
-            y: [0, -10, 0],
-            rotate: [-5, 0, -5],
-          }}
-          transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
-        >
-          <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
-            <path d="M50 30L30 70L50 110" stroke="#3b82f6" strokeWidth="3" strokeOpacity="0.4" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M90 30L110 70L90 110" stroke="#3b82f6" strokeWidth="3" strokeOpacity="0.4" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M70 20L60 120" stroke="#3b82f6" strokeWidth="2" strokeOpacity="0.3" strokeLinecap="round" strokeDasharray="4,6" />
-          </svg>
-        </motion.div>
-
-        {/* Added circuit-like pattern SVG */}
-        <motion.div
-          className="absolute left-[60%] bottom-[10%] opacity-15"
-          animate={{
-            scale: [1, 1.05, 1],
-          }}
-          transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
-        >
-          <svg width="200" height="120" viewBox="0 0 200 120" fill="none">
-            <path d="M20 60H60" stroke="#3b82f6" strokeWidth="1.5" strokeOpacity="0.4" />
-            <path d="M80 60H120" stroke="#3b82f6" strokeWidth="1.5" strokeOpacity="0.4" />
-            <path d="M140 60H180" stroke="#3b82f6" strokeWidth="1.5" strokeOpacity="0.4" />
-            <path d="M60 60V30H80V60" stroke="#3b82f6" strokeWidth="1.5" strokeOpacity="0.4" />
-            <path d="M120 60V90H140V60" stroke="#3b82f6" strokeWidth="1.5" strokeOpacity="0.4" />
-            <circle cx="60" cy="60" r="5" fill="#3b82f6" fillOpacity="0.5" />
-            <circle cx="80" cy="60" r="5" fill="#3b82f6" fillOpacity="0.5" />
-            <circle cx="120" cy="60" r="5" fill="#3b82f6" fillOpacity="0.5" />
-            <circle cx="140" cy="60" r="5" fill="#3b82f6" fillOpacity="0.5" />
-            <circle cx="60" cy="30" r="3" fill="#3b82f6" fillOpacity="0.3" />
-            <circle cx="140" cy="90" r="3" fill="#3b82f6" fillOpacity="0.3" />
-          </svg>
-        </motion.div>
-
-        {/* Added geometric pattern */}
-        <motion.div
-          className="absolute left-[20%] top-[65%] opacity-10"
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{ repeat: Infinity, duration: 100, ease: "linear" }}
-        >
-          <svg width="150" height="150" viewBox="0 0 150 150" fill="none">
-            <rect x="75" y="25" width="50" height="50" stroke="#3b82f6" strokeWidth="1" strokeOpacity="0.4" transform="rotate(45 75 25)" />
-            <rect x="75" y="25" width="70" height="70" stroke="#3b82f6" strokeWidth="1" strokeOpacity="0.3" transform="rotate(45 75 25)" />
-            <rect x="75" y="25" width="90" height="90" stroke="#3b82f6" strokeWidth="1" strokeOpacity="0.2" transform="rotate(45 75 25)" />
-            <rect x="75" y="25" width="110" height="110" stroke="#3b82f6" strokeWidth="1" strokeOpacity="0.1" transform="rotate(45 75 25)" />
-          </svg>
         </motion.div>
       </div>
 
@@ -368,7 +453,7 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Creative showcase section - replacing image with creative elements */}
+          {/* Creative showcase section */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -376,281 +461,6 @@ const Hero = () => {
             className="lg:col-span-5 hidden lg:block"
           >
             <div className="relative h-[550px] w-full">
-              {/* Creative showcase with abstract visual elements */}
-              <div className="absolute inset-4">
-                {/* Large circular element representing photography */}
-                <motion.div
-                  className="absolute z-10 top-0 right-0 w-[70%] h-[50%] rounded-lg overflow-hidden backdrop-blur-sm"
-                  animate={{
-                    y: [0, -5, 0]
-                  }}
-                  transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
-                >
-                  <div className="absolute inset-0 rounded-lg border border-gray-700/50 overflow-hidden bg-blue-500/5 flex items-center justify-center">
-                    {/* Enhanced Camera aperture animation */}
-                    <motion.div
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-                      className="relative w-56 h-56"
-                    >
-                      {/* Aperture blades - increased count and improved */}
-                      {Array.from({ length: 12 }).map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute inset-0 flex justify-center"
-                          style={{
-                            transform: `rotate(${i * 30}deg)`,
-                            transformOrigin: 'center'
-                          }}
-                          animate={{
-                            opacity: [0.5, 0.8, 0.5]
-                          }}
-                          transition={{
-                            duration: 4,
-                            delay: i * 0.2,
-                            repeat: Infinity
-                          }}
-                        >
-                          <div className="w-1 h-28 bg-blue-500/30"></div>
-                        </motion.div>
-                      ))}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-32 h-32 rounded-full border-2 border-blue-500/40"></div>
-                        <div className="absolute w-24 h-24 rounded-full border border-blue-500/50"></div>
-                        <div className="absolute w-16 h-16 rounded-full border border-blue-500/60"></div>
-                        <div className="absolute w-8 h-8 rounded-full bg-blue-500/30"></div>
-                      </div>
-
-                      {/* Added shutter animation */}
-                      <motion.div
-                        className="absolute inset-0 flex items-center justify-center"
-                        animate={{
-                          scale: [1, 0.9, 1],
-                          opacity: [0.6, 0.3, 0.6]
-                        }}
-                        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-                      >
-                        <div className="w-40 h-40 rounded-full border-4 border-blue-500/10"></div>
-                      </motion.div>
-                    </motion.div>
-                  </div>
-                  <div className="absolute bottom-4 right-4 text-xs text-blue-400/80 font-mono">
-                    <span>// photography</span>
-                  </div>
-                </motion.div>
-
-                {/* Writing element with enhanced animated text lines */}
-                <motion.div
-                  className="absolute z-30 left-[10%] top-[35%] w-[45%] h-[35%] rounded-lg overflow-hidden"
-                  animate={{
-                    rotate: [-2, 0, -2],
-                    y: [0, 5, 0]
-                  }}
-                  transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-                >
-                  <div className="absolute inset-0 rounded-lg border border-gray-700/50 overflow-hidden bg-blue-500/5 flex items-center justify-center backdrop-blur-sm">
-                    <div className="h-[70%] w-[80%] flex flex-col justify-center gap-3">
-                      {/* Enhanced typing effect for lines with more variation */}
-                      {Array.from({ length: 7 }).map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className={`h-[2px] bg-blue-500/${40 + i * 5}`}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${60 + Math.random() * 40}%` }}
-                          transition={{
-                            duration: 1.5 + Math.random(),
-                            delay: i * 0.15,
-                            repeat: Infinity,
-                            repeatType: "reverse",
-                            repeatDelay: 3 + Math.random() * 2
-                          }}
-                        ></motion.div>
-                      ))}
-                    </div>
-
-                    {/* Added document corner fold */}
-                    <div className="absolute top-0 right-0 w-10 h-10">
-                      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                        <path d="M0 0L40 40V0H0Z" fill="#3b82f6" fillOpacity="0.1" />
-                        <path d="M30 0L40 10L40 0L30 0Z" fill="#3b82f6" fillOpacity="0.2" />
-                      </svg>
-                    </div>
-
-                    <div className="absolute top-0 left-0 m-4 flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-blue-500/40"></div>
-                      <div className="w-3 h-3 rounded-full bg-blue-500/30"></div>
-                      <div className="w-3 h-3 rounded-full bg-blue-500/20"></div>
-                    </div>
-                  </div>
-                  <div className="absolute bottom-4 right-4 text-xs text-blue-400/80 font-mono">
-                    <span>// writing</span>
-                  </div>
-                </motion.div>
-
-                {/* Flutter/code element with enhanced animated code */}
-                <motion.div
-                  className="absolute z-20 right-[15%] bottom-[15%] w-[50%] h-[35%] rounded-lg overflow-hidden"
-                  animate={{
-                    rotate: [1, -1, 1],
-                    y: [0, -3, 0]
-                  }}
-                  transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
-                >
-                  <div className="absolute inset-0 rounded-lg border border-gray-700/50 overflow-hidden bg-blue-500/5 backdrop-blur-sm">
-                    {/* Enhanced editor header with buttons and tab */}
-                    <div className="absolute top-0 left-0 right-0 h-8 bg-gray-900/60 border-b border-gray-800 flex items-center px-4">
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
-                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
-                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
-                      </div>
-                      <div className="ml-4 px-3 py-1 bg-blue-500/10 rounded-t-sm text-[10px] text-blue-400/80">main.dart</div>
-                    </div>
-
-                    <div className="absolute top-8 bottom-0 left-0 right-0 p-4 font-mono text-xs">
-                      <div className="flex flex-col gap-2">
-                        {/* Enhanced code lines */}
-                        <motion.div
-                          className="text-blue-400/70"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.2, duration: 0.5 }}
-                        >
-                          import 'package:flutter/material.dart';
-                        </motion.div>
-                        <motion.div
-                          className="text-gray-400/70"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.5, duration: 0.5 }}
-                        >
-                          class <span className="text-green-400/80">MyApp</span> extends <span className="text-blue-400/80">StatelessWidget</span> {'{'}
-                        </motion.div>
-                        <motion.div
-                          className="pl-4 text-purple-400/70"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.8, duration: 0.5 }}
-                        >
-                          Widget build(BuildContext context) {'{'}
-                        </motion.div>
-                        <motion.div
-                          className="pl-8 text-blue-400/70"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.1, duration: 0.5 }}
-                        >
-                          return <span className="text-green-400/80">MaterialApp</span>(
-                        </motion.div>
-                        <motion.div
-                          className="pl-12 text-orange-400/70"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.4, duration: 0.5 }}
-                        >
-                          theme: <span className="text-blue-400/70">ThemeData</span>(
-                        </motion.div>
-                        <motion.div
-                          className="pl-16 text-purple-400/70"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 1.7, duration: 0.5 }}
-                        >
-                          primarySwatch: <span className="text-blue-400/70">Colors</span>.blue,
-                        </motion.div>
-                        <motion.div
-                          className="flex items-center gap-2 pl-8"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 2.0, duration: 0.5 }}
-                        >
-                          <div className="w-2 h-4 bg-blue-500/70 animate-pulse"></div>
-                        </motion.div>
-                      </div>
-                    </div>
-
-                    {/* Added line numbers */}
-                    <div className="absolute top-8 bottom-0 left-0 w-6 bg-gray-900/40 flex flex-col items-end pr-1 pt-4 text-[10px] text-gray-500/60 font-mono">
-                      {Array.from({ length: 7 }).map((_, i) => (
-                        <div key={i} className="h-[18px]">{i + 1}</div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="absolute bottom-4 right-4 text-xs text-blue-400/80 font-mono">
-                    <span>// code</span>
-                  </div>
-                </motion.div>
-
-                {/* Enhanced animated connections between elements */}
-                <svg className="absolute inset-0 w-full h-full z-0" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" strokeDasharray="6,4">
-                  <motion.line
-                    x1="65%" y1="25%"
-                    x2="35%" y2="50%"
-                    strokeWidth="1.5"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 1.2 }}
-                  />
-                  <motion.line
-                    x1="35%" y1="50%"
-                    x2="65%" y2="70%"
-                    strokeWidth="1.5"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 1.4 }}
-                  />
-                  <motion.line
-                    x1="65%" y1="70%"
-                    x2="65%" y2="25%"
-                    strokeWidth="1.5"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 1.6 }}
-                  />
-
-                  {/* Added connection nodes */}
-                  <motion.circle cx="65%" cy="25%" r="3" fill="rgba(59, 130, 246, 0.5)"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 1.2 }}
-                  />
-                  <motion.circle cx="35%" cy="50%" r="3" fill="rgba(59, 130, 246, 0.5)"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 1.4 }}
-                  />
-                  <motion.circle cx="65%" cy="70%" r="3" fill="rgba(59, 130, 246, 0.5)"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 1.6 }}
-                  />
-                </svg>
-
-                {/* Enhanced animated particles with more variation */}
-                {Array.from({ length: 30 }).map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className={`absolute rounded-full ${i % 3 === 0 ? 'bg-blue-400/40' : i % 3 === 1 ? 'bg-indigo-400/30' : 'bg-sky-400/30'}`}
-                    style={{
-                      width: 2 + Math.random() * 4,
-                      height: 2 + Math.random() * 4,
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                    }}
-                    animate={{
-                      opacity: [0, 1, 0],
-                      y: [0, -20 - Math.random() * 10, 0],
-                      x: [0, Math.random() * 15 - 7.5, 0]
-                    }}
-                    transition={{
-                      duration: 3 + Math.random() * 4,
-                      repeat: Infinity,
-                      delay: Math.random() * 5,
-                    }}
-                  />
-                ))}
-              </div>
-
               {/* Decorative corner elements */}
               <motion.div
                 className="absolute -top-5 -right-5 w-20 h-20 border-t-2 border-r-2 border-blue-500/40"
@@ -669,7 +479,241 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Custom cursor effect - optional */}
+      {/* Replace the existing game section with the new Code Challenge Game */}
+      <motion.div
+        className="absolute bottom-10 left-0 right-0 flex flex-col items-center justify-center z-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        <button
+          onClick={toggleGame}
+          className="px-4 py-2 rounded-full bg-blue-600/20 border border-blue-500/30 text-blue-400 text-sm mb-4 hover:bg-blue-600/30 transition-all duration-300"
+        >
+          {showGame ? 'Hide Code Challenge' : 'Try Code Challenge'}
+        </button>
+
+        {showGame && (
+          <motion.div
+            ref={gameAreaRef}
+            className="w-[450px] max-w-[90vw] backdrop-blur-md bg-gray-900/70 border border-gray-700/50 rounded-xl relative overflow-hidden mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            {/* Header */}
+            <div className="p-3 border-b border-gray-700/50 bg-black/30 flex justify-between items-center">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
+              </div>
+              <div className="text-xs text-blue-400 font-mono">
+                {gameStatus === 'playing' && currentPuzzle ? (
+                  <span>Code Challenge: {puzzleIndex + 1}/{codePuzzles.length} - {timer}s</span>
+                ) : (
+                  <span>Code Challenge</span>
+                )}
+              </div>
+              <div className="text-xs text-blue-300 font-mono">
+                Score: <span className="text-white">{gameScore}</span>
+              </div>
+            </div>
+
+            {/* Game intro */}
+            {gameStatus === 'intro' && (
+              <div className="p-6 flex flex-col items-center">
+                <motion.div
+                  className="bg-blue-500/10 p-5 rounded-lg mb-6 w-full border border-blue-500/20"
+                  animate={{
+                    boxShadow: ['0 0 0 rgba(59, 130, 246, 0.1)', '0 0 20px rgba(59, 130, 246, 0.2)', '0 0 0 rgba(59, 130, 246, 0.1)']
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <h3 className="text-xl font-bold text-blue-400 mb-3">Coding Challenge</h3>
+                  <p className="text-gray-300 text-sm mb-3">
+                    Test your coding skills by solving JavaScript challenges. You'll have 60 seconds for each puzzle.
+                  </p>
+                  <div className="text-xs text-gray-400 p-2 bg-black/30 rounded font-mono mb-3">
+                    Complete the missing code to make the function work as expected.
+                  </div>
+                  <p className="text-xs text-blue-300 italic">
+                    Challenges get progressively more difficult. Good luck!
+                  </p>
+                </motion.div>
+
+                <motion.button
+                  className="px-6 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors"
+                  onClick={startGame}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Start Challenge
+                </motion.button>
+              </div>
+            )}
+
+            {/* Game playing screen */}
+            {gameStatus === 'playing' && currentPuzzle && (
+              <div className="p-4">
+                <div className="mb-3">
+                  <h3 className="text-lg font-semibold text-blue-400 mb-2">{currentPuzzle.title}</h3>
+                  <p className="text-sm text-gray-300 mb-2">{currentPuzzle.description}</p>
+                </div>
+
+                <div className="bg-gray-900 border border-gray-800 rounded-md p-3 mb-3 font-mono text-xs overflow-x-auto">
+                  <div className="text-gray-400">
+                    {currentPuzzle.code.split('\n').map((line, i) => (
+                      <div key={i} className="flex">
+                        <span className="text-gray-600 w-6 text-right pr-2">{i + 1}</span>
+                        <span>{line}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="text-xs text-gray-400 mb-2">
+                  <span className="bg-black/30 px-2 py-1 rounded">Test: {currentPuzzle.test} → {currentPuzzle.expectedOutput}</span>
+                </div>
+
+                <div className="mb-3">
+                  <textarea
+                    className="w-full bg-gray-900 border border-gray-800 rounded-md p-3 text-blue-300 font-mono text-xs h-16 focus:border-blue-600 focus:outline-none resize-none"
+                    placeholder="// Type your solution here"
+                    value={userAnswer}
+                    onChange={(e) => setUserAnswer(e.target.value)}
+                  />
+                </div>
+
+                {errorMessage && (
+                  <div className="text-red-400 text-xs mb-2">{errorMessage}</div>
+                )}
+
+                <div className="flex justify-between">
+                  <button
+                    className="px-3 py-1.5 text-xs rounded-md bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 transition-colors"
+                    onClick={() => setErrorMessage(currentPuzzle.hint)}
+                  >
+                    Get Hint
+                  </button>
+
+                  <div>
+                    <button
+                      className="px-3 py-1.5 text-xs rounded-md bg-gray-800 text-gray-300 mr-2 hover:bg-gray-700 transition-colors"
+                      onClick={showSolution}
+                    >
+                      Show Solution
+                    </button>
+
+                    <button
+                      className="px-4 py-1.5 text-xs rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                      onClick={checkAnswer}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Success screen */}
+            {gameStatus === 'success' && (
+              <div className="p-6 text-center">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="mb-3"
+                >
+                  <div className="w-16 h-16 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-green-400">Correct!</h3>
+                  <p className="text-gray-300 text-sm mt-2">Preparing the next challenge...</p>
+                </motion.div>
+              </div>
+            )}
+
+            {/* Failure screen */}
+            {gameStatus === 'failure' && (
+              <div className="p-6 text-center">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="mb-4"
+                >
+                  <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-400">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-red-400">Time's Up!</h3>
+                  <p className="text-gray-300 text-sm mt-2">You ran out of time for this challenge.</p>
+
+                  <div className="mt-4 p-3 bg-black/20 rounded text-left text-xs text-gray-400 font-mono">
+                    <div className="text-blue-400 mb-1">Solution:</div>
+                    {currentPuzzle && currentPuzzle.solution.split('\n').map((line, i) => (
+                      <div key={i}>{line}</div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                <div className="flex justify-center gap-3">
+                  {puzzleIndex < codePuzzles.length - 1 ? (
+                    <button
+                      className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                      onClick={handleNextPuzzle}
+                    >
+                      Next Challenge
+                    </button>
+                  ) : (
+                    <button
+                      className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                      onClick={resetGame}
+                    >
+                      Try Again
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Game completed screen */}
+            {gameStatus === 'completed' && (
+              <div className="p-6 text-center">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="mb-4"
+                >
+                  <div className="w-20 h-20 mx-auto bg-blue-500/20 rounded-full flex items-center justify-center mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-blue-400 mb-1">Challenge Complete!</h3>
+                  <p className="text-2xl font-bold text-white">{gameScore}/{codePuzzles.length}</p>
+                  <p className="text-gray-300 text-sm mt-2">
+                    {gameScore === codePuzzles.length
+                      ? 'Perfect score! Youre a coding genius!'
+                      : 'Great effort! Keep practicing to improve.'}
+                  </p>
+                </motion.div>
+
+                <button
+                  className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                  onClick={resetGame}
+                >
+                  Play Again
+                </button>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </motion.div>
+
+      {/* Custom cursor effect */}
       <div
         className="fixed w-6 h-6 rounded-full border-2 border-blue-500/50 pointer-events-none z-50 hidden lg:block"
         style={{
