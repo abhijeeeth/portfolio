@@ -93,6 +93,43 @@ const Hero = () => {
         }
       },
       hint: "Try using Math.max() or a comparison loop"
+    },
+    {
+      title: "Filter Array",
+      description: "Complete the function to filter out all numbers less than 10",
+      code: `function filterSmallNumbers(arr) {\n  // Your code here\n  \n}`,
+      solution: `function filterSmallNumbers(arr) {\n  return arr.filter(num => num >= 10);\n}`,
+      test: `filterSmallNumbers([5, 12, 8, 20, 3])`,
+      expectedOutput: `[12, 20]`,
+      verify: answer => {
+        try {
+          // Parse the array from the string answer
+          const result = JSON.parse(answer.replace(/'/g, '"'));
+          return Array.isArray(result) &&
+            result.length === 2 &&
+            result.includes(12) &&
+            result.includes(20);
+        } catch (e) {
+          return false;
+        }
+      },
+      hint: "Try using the array filter() method with a condition"
+    },
+    {
+      title: "Object Property Counter",
+      description: "Complete the function to count the number of properties in an object",
+      code: `function countProperties(obj) {\n  // Your code here\n  \n}`,
+      solution: `function countProperties(obj) {\n  return Object.keys(obj).length;\n}`,
+      test: `countProperties({name: 'John', age: 30, city: 'New York'})`,
+      expectedOutput: `3`,
+      verify: answer => {
+        try {
+          return Number(answer) === 3;
+        } catch (e) {
+          return false;
+        }
+      },
+      hint: "Try using Object.keys() or a for...in loop"
     }
   ];
 
@@ -525,29 +562,124 @@ const Hero = () => {
                 transition={{ delay: 1.1, duration: 0.5 }}
               ></motion.div>
 
-              {/* Added more decorative SVG elements */}
+              {/* Code-related SVG elements */}
               <motion.div
-                className="absolute top-1/4 left-1/4 opacity-30"
+                className="absolute top-1/4 left-1/4 opacity-40"
                 animate={{
-                  rotate: [0, 360],
+                  rotate: [0, 5, 0, -5, 0],
                 }}
-                transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+                transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <circle cx="12" cy="12" r="6"></circle>
-                  <circle cx="12" cy="12" r="2"></circle>
+                <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
                 </svg>
               </motion.div>
+
               <motion.div
-                className="absolute bottom-1/3 right-1/3 opacity-30"
+                className="absolute bottom-1/3 right-1/3 opacity-40"
                 animate={{
-                  rotate: [0, -360],
+                  scale: [1, 1.05, 1],
                 }}
-                transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 3H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1"></path>
+                  <path d="M15 3a2 2 0 0 0-4 0"></path>
+                  <line x1="8" y1="10" x2="16" y2="10"></line>
+                  <line x1="8" y1="14" x2="16" y2="14"></line>
+                  <line x1="8" y1="18" x2="12" y2="18"></line>
+                </svg>
+              </motion.div>
+
+              {/* Code bracket SVG */}
+              <motion.div
+                className="absolute top-10 right-10 opacity-30"
+                animate={{
+                  x: [0, 5, 0],
+                }}
+                transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 20.5l3-17a1 1 0 0 1 1-.5h.5a1 1 0 0 1 1 .5l3 17"></path>
+                  <path d="M18 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2Z"></path>
+                  <path d="m14.5 15-5-6"></path>
+                  <path d="m9.5 15 5-6"></path>
+                </svg>
+              </motion.div>
+
+              {/* Terminal/Command line SVG */}
+              <motion.div
+                className="absolute bottom-20 left-10 opacity-40"
+                animate={{
+                  y: [0, -8, 0],
+                }}
+                transition={{ repeat: Infinity, duration: 9, ease: "easeInOut" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="4 17 10 11 4 5"></polyline>
+                  <line x1="12" y1="19" x2="20" y2="19"></line>
+                </svg>
+              </motion.div>
+
+              {/* Database SVG */}
+              <motion.div
+                className="absolute bottom-40 right-20 opacity-30"
+                animate={{
+                  scale: [1, 1.08, 1],
+                }}
+                transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+              </motion.div>
+
+              {/* Code snippet SVG */}
+              <motion.div
+                className="absolute top-40 left-20 opacity-30"
+                animate={{
+                  rotate: [0, 3, 0, -3, 0],
+                }}
+                transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1"></path>
+                  <path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1"></path>
+                </svg>
+              </motion.div>
+
+              {/* JSON/API SVG */}
+              <motion.div
+                className="absolute top-1/2 left-1/3 opacity-25"
+                animate={{
+                  y: [0, 10, 0],
+                }}
+                transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#ec4899" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21.5 2h-19A2.5 2.5 0 0 0 0 4.5v15A2.5 2.5 0 0 0 2.5 22h19a2.5 2.5 0 0 0 2.5-2.5v-15A2.5 2.5 0 0 0 21.5 2zM8 19H4v-2h4v2zm0-4H4v-2h4v2zm0-4H4V9h4v2zm0-4H4V5h4v2zm10 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2zm0-4h-8V5h8v2z"></path>
+                </svg>
+              </motion.div>
+
+              {/* Git branch SVG */}
+              <motion.div
+                className="absolute bottom-10 right-1/4 opacity-30"
+                animate={{
+                  rotate: [0, -5, 0, 5, 0],
+                }}
+                transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="85" height="85" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="18" cy="6" r="3"></circle>
+                  <circle cx="6" cy="6" r="3"></circle>
+                  <circle cx="6" cy="18" r="3"></circle>
+                  <path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"></path>
+                  <path d="M6 15v-1a2 2 0 0 1 2-2h2"></path>
                 </svg>
               </motion.div>
             </div>
