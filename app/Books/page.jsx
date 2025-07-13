@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import { FaAmazon, FaBookOpen } from 'react-icons/fa';
 import finalcover from '../images/finalcover.png'; // import the image
