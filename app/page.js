@@ -29,7 +29,7 @@ const FloatingChatButton = () => {
               rel="noopener noreferrer"
               className="bg-white backdrop-blur-sm bg-opacity-90 text-gray-800 px-4 py-2 rounded-full shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
             >
-              <span className="font-medium text-sm whitespace-nowrap">Let's Connect</span>
+              <span className="font-medium text-sm whitespace-nowrap">Let&apos;s Connect</span>
             </a>
           </div>
         )}
