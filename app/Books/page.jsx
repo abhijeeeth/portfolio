@@ -27,49 +27,49 @@ const Books = () => {
         },
     ];
     return (
-        <section id="books" className="py-20 bg-gradient-to-b from-gray-900 to-black">
-            <div className="container mx-auto px-4 max-w-5xl">
-                <h2 className="text-4xl sm:text-5xl font-bold text-center text-white mb-12 tracking-tight">
-                    Books I Wrote
+        <section id="books" className="py-24 bg-gray-950 text-gray-100">
+            <div className="container mx-auto px-6 max-w-4xl">
+                <h2 className="text-3xl font-bold text-center mb-16">
+                    Publications
                 </h2>
 
-                <div className="space-y-12">
+                <div className="space-y-8">
                     {books.map((book, idx) => (
                         <div
                             key={book.id}
-                            className="animate-fade-in rounded-xl overflow-hidden bg-gray-900/70 backdrop-blur shadow-xl border border-gray-800/50 hover:border-blue-500/30 transition-all duration-300"
-                            style={{ animationDelay: `${idx * 100}ms` }}
+                            className="fade-in rounded-lg overflow-hidden bg-gray-900 border border-gray-800 hover:border-gray-700 transition-all duration-300 shadow-md"
+                            style={{ animationDelay: `${idx * 150}ms` }}
                         >
-                            <div className="p-6 sm:p-8 flex flex-col md:flex-row gap-8 items-center">
+                            <div className="p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center">
                                 {book.isPublished ? (
-                                    <div className="relative w-48 h-64 md:w-56 md:h-72 flex-shrink-0">
+                                    <div className="relative w-40 h-56 md:w-44 md:h-60 flex-shrink-0">
                                         <Image
                                             src={book.image}
                                             alt={book.title}
                                             fill
-                                            className="object-contain rounded-lg hover:scale-105 transition-transform duration-500"
-                                            sizes="(max-width: 768px) 192px, 224px"
+                                            className="object-contain rounded-md hover:scale-105 transition-transform duration-500"
+                                            sizes="(max-width: 768px) 160px, 176px"
                                             priority
                                         />
                                     </div>
                                 ) : (
-                                    <div className="relative w-48 h-64 md:w-56 md:h-72 flex-shrink-0">
-                                        <div className="w-full h-full rounded-lg bg-gray-800/50 shimmer-effect"></div>
+                                    <div className="relative w-40 h-56 md:w-44 md:h-60 flex-shrink-0">
+                                        <div className="w-full h-full rounded-md bg-gray-800 pulse-subtle"></div>
                                     </div>
                                 )}
 
-                                <div className="flex flex-col space-y-5 flex-1">
-                                    <h3 className="text-2xl sm:text-3xl font-semibold text-white">{book.title}</h3>
+                                <div className="flex flex-col space-y-4 flex-1">
+                                    <h3 className="text-xl font-medium text-white">{book.title}</h3>
 
                                     {book.isPublished ? (
                                         <>
-                                            <p className="text-gray-300 leading-relaxed">{book.description}</p>
-                                            <div className="flex flex-wrap gap-4 pt-2">
+                                            <p className="text-gray-300 text-sm leading-relaxed">{book.description}</p>
+                                            <div className="flex flex-wrap gap-4 pt-3">
                                                 <a
                                                     href={book.amazonLink}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium transition-colors duration-300"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-white text-sm transition-colors duration-200"
                                                 >
                                                     <FaAmazon />
                                                     <span>Amazon</span>
@@ -78,7 +78,7 @@ const Books = () => {
                                                     href={book.pothyLink}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-medium transition-colors duration-300"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-white text-sm transition-colors duration-200"
                                                 >
                                                     <FaBookOpen />
                                                     <span>Pothy</span>
@@ -87,12 +87,20 @@ const Books = () => {
                                         </>
                                     ) : (
                                         <>
-                                            <div className="h-20 w-full rounded shimmer-effect"></div>
-                                            <div className="flex flex-wrap gap-4 pt-2">
-                                                <div className="h-10 w-28 rounded-lg shimmer-effect"></div>
-                                                <div className="h-10 w-28 rounded-lg shimmer-effect"></div>
+                                            <div className="space-y-3">
+                                                <div className="h-2 w-3/4 rounded-full bg-gray-800"></div>
+                                                <div className="h-2 w-full rounded-full bg-gray-800"></div>
+                                                <div className="h-2 w-5/6 rounded-full bg-gray-800"></div>
                                             </div>
-                                            <p className="text-amber-400 font-semibold text-lg absolute bottom-6 md:bottom-8 right-6 md:right-8">Coming Soon</p>
+                                            <div className="flex flex-wrap gap-4 pt-3">
+                                                <div className="h-10 w-28 rounded-md bg-gray-800"></div>
+                                                <div className="h-10 w-28 rounded-md bg-gray-800"></div>
+                                            </div>
+                                            <div className="mt-2">
+                                                <span className="px-3 py-1 bg-gray-800 text-gray-400 text-xs font-medium">
+                                                    Coming Soon
+                                                </span>
+                                            </div>
                                         </>
                                     )}
                                 </div>
@@ -103,27 +111,24 @@ const Books = () => {
             </div>
 
             <style jsx global>{`
-                @keyframes fade-in {
-                    from { opacity: 0; transform: translateY(20px);}
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px);}
                     to { opacity: 1; transform: translateY(0);}
                 }
-                .animate-fade-in {
-                    animation: fade-in 0.6s ease-out forwards;
+                
+                .fade-in {
+                    opacity: 0;
+                    animation: fadeIn 0.5s ease-out forwards;
                 }
                 
-                @keyframes shimmer {
-                    0% {
-                        background-position: -468px 0;
-                    }
-                    100% {
-                        background-position: 468px 0;
-                    }
+                @keyframes pulse {
+                    0% { opacity: 0.7; }
+                    50% { opacity: 0.9; }
+                    100% { opacity: 0.7; }
                 }
                 
-                .shimmer-effect {
-                    background: linear-gradient(to right, #2a2a2a 8%, #3a3a3a 18%, #2a2a2a 33%);
-                    background-size: 800px 104px;
-                    animation: shimmer 1.5s infinite linear;
+                .pulse-subtle {
+                    animation: pulse 2s infinite ease-in-out;
                 }
             `}</style>
         </section>
