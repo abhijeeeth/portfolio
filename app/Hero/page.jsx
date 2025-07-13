@@ -472,9 +472,11 @@ const Hero = () => {
                 </motion.div>
               </div>
               <div className="text-2xl lg:text-4xl text-gray-300 font-sans flex flex-wrap items-center gap-x-3">
-                <span className="text-white font-medium">I&apos;m a</span>
+                {/* <span className="text-white font-medium">I&apos;m a</span> */}
                 <TypeAnimation
                   sequence={[
+                    "Author",
+                    2000,
                     "Flutter Developer",
                     2000,
                     "Mobile App Specialist",
