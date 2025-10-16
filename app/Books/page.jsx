@@ -1,7 +1,9 @@
 'use client';
 import Image from 'next/image';
 import { FaAmazon, FaBookOpen } from 'react-icons/fa';
-import finalcover from '../images/finalcover.png'; // import the image
+import finalcover from '../images/finalcover.png';
+import finalcover2 from '../images/cover.png';
+// import the image
 
 const Books = () => {
     const books = [
@@ -13,15 +15,27 @@ const Books = () => {
             image: finalcover,
             amazonLink: 'https://amzn.in/d/bSeEfeq',
             pothyLink: 'https://store.pothi.com/book/abhijith-shaji-perfect-lie/',
+            flipkartLink: 'https://store.pothi.com/book/abhijith-shaji-perfect-lie/',
             isPublished: true
         },
         {
             id: 2,
+            title: 'The Perfect Lie: MASTER THE ART OF MISDIRECTION',
+            author: '',
+            description: 'Mastering the Perfect Lie is a bold and insightful guide into the art of deception. Blending psychology, real-life examples, and practical techniques, this book teaches you how to craft convincing lies, avoid getting caught, and detect dishonesty in others. A must-read for anyone curious about the hidden dynamics of truth and deception in everyday life.',
+            image: finalcover2,
+            amazonLink: 'https://amzn.in/d/1pT0pIZ',
+            pothyLink: 'https://store.pothi.com/book/abhijith-shaji-illusion-free-will/',
+            flipkartLink: 'https://www.flipkart.com/illusion-free-master-art-control/p/itm02607ec74a342?pid=9789334409581&lid=LSTBOK9789334409581XNDSBN&marketplace=FLIPKART&cmpid=content_book_8965229628_gmc',
+            isPublished: true
+        },
+        {
+            id: 3,
             title: 'How to Bury Someone',
             isPublished: false
         },
         {
-            id: 3,
+            id: 4,
             title: 'Raksha',
             isPublished: false
         },
@@ -73,6 +87,15 @@ const Books = () => {
                                                 >
                                                     <FaAmazon />
                                                     <span>Amazon</span>
+                                                </a>
+                                                <a
+                                                    href={book.flipkartLink}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-blue-800 hover:bg-blue-700 text-white text-sm transition-colors duration-200"
+                                                >
+                                                    {/* You can use a generic icon or add a Flipkart SVG/icon here */}
+                                                    <span>Flipkart</span>
                                                 </a>
                                                 <a
                                                     href={book.pothyLink}
