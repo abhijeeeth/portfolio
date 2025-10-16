@@ -20,9 +20,12 @@ const Books = () => {
         },
         {
             id: 2,
-            title: 'The Perfect Lie: MASTER THE ART OF MISDIRECTION',
+            title: 'The Illusion of Free Will: MASTER THE ART OF CONTROL',
             author: '',
-            description: 'Mastering the Perfect Lie is a bold and insightful guide into the art of deception. Blending psychology, real-life examples, and practical techniques, this book teaches you how to craft convincing lies, avoid getting caught, and detect dishonesty in others. A must-read for anyone curious about the hidden dynamics of truth and deception in everyday life.',
+            description: `Do you really control your choices? Or have you only been taught to believe you do?
+The Illusion of Free Will pulls back the curtain on the darkest corners of the human mind. It shows how every fear, desire, and insecurity can be bent, twisted, and used—against you, or by you. Once you see how easily people can be read, manipulated, and controlled, you will never look at another person the same way again.
+This book is not comfort. It is a weapon. Inside its pages lie the secrets of how humans truly work—their weaknesses, their hidden strings, their illusions of control. Whether you seek power, protection, or truth, what you discover here will change the way you see the world forever.
+Dare to open it. But know this: once you step inside, there is no going back.`,
             image: finalcover2,
             amazonLink: 'https://amzn.in/d/1pT0pIZ',
             pothyLink: 'https://store.pothi.com/book/abhijith-shaji-illusion-free-will/',
