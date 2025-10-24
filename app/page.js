@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import AboutMe from "./About/page";
-// import Books from './books/page';
+import Books from './Books/page';
 import Footer from "./Contact/ContactMe";
 import Hero from "./Hero/page";
 import QuiltedImageList from "./ImageCom/page";
@@ -71,7 +71,7 @@ export default function Home() {
       <QuiltedImageList />
       <AboutMe />
       <Projects />
-      {/* <Books /> */}
+      <Books />
       <Skills />
       <Footer />
       <FloatingChatButton />
