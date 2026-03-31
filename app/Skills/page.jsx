@@ -1,7 +1,8 @@
 // components/Skills.js
 'use client';
-import { Box, Container, Fade, Grid, LinearProgress, Typography } from '@mui/material';
+import { Box, Chip, Container, Fade, Grid, LinearProgress, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { PageWrapper } from '../Components/PageWrap';
 
 const FLUTTER_SKILL = {
   name: 'Flutter',
@@ -9,10 +10,19 @@ const FLUTTER_SKILL = {
   progress: 0,
   finalProgress: 98,
   featured: true,
-  description: 'Cross-platform app development with advanced UI components'
+  description: 'Cross-platform app development with behavior-aware UI systems'
 };
 
 const SKILL_CATEGORIES = [
+  {
+    category: "Human Psychology & Influence",
+    skills: [
+      { name: 'Behavioral Psychology', level: 'Master', progress: 0, finalProgress: 96 },
+      { name: 'Persuasion Design', level: 'Master', progress: 0, finalProgress: 94 },
+      { name: 'Decision Framing', level: 'Expert', progress: 0, finalProgress: 92 },
+      { name: 'Narrative Strategy', level: 'Expert', progress: 0, finalProgress: 93 },
+    ]
+  },
   {
     category: "Other Mobile Technologies",
     skills: [
@@ -93,258 +103,273 @@ const Skills = () => {
 
   const getColorForLevel = (level) => {
     switch (level) {
-      case 'Expert': return '#4caf50';
-      case 'Advanced': return '#2196f3';
-      case 'Proficient': return '#ff9800';
-      default: return '#9c27b0';
+      case 'Master': return '#ff6f91';
+      case 'Expert': return '#5ce1e6';
+      case 'Advanced': return '#9f8bff';
+      case 'Proficient': return '#ffad66';
+      default: return '#80cbc4';
     }
   };
 
+  const getCategoryGlow = (index) => {
+    const glows = [
+      'rgba(92,225,230,0.22)',
+      'rgba(159,139,255,0.22)',
+      'rgba(255,173,102,0.22)',
+      'rgba(144,202,249,0.22)',
+      'rgba(129,199,132,0.22)'
+    ];
+    return glows[index % glows.length];
+  };
+
   return (
-    <Container maxWidth="lg" sx={{ my: 8, py: 6 }} className='text-white bg-gradient-to-br from-black/90 to-black/70 p-6 sm:p-12 rounded-lg shadow-xl'>
-      <Fade in={true} timeout={1000}>
-        <div>
-          <Typography
-            variant="h3"
-            fontWeight="bold"
-            mb={6}
-            className='text-center'
-            sx={{
-              position: 'relative',
-              display: 'inline-block',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              '&:after': {
-                content: '""',
-                position: 'absolute',
-                bottom: '-10px',
-                left: '10%',
-                width: '80%',
-                height: '4px',
-                background: 'linear-gradient(to right, transparent, #fff, transparent)',
-              }
-            }}
-          >
-            Technical Expertise
-          </Typography>
-
-          {/* Flutter Showcase Section */}
-          <Box
-            mb={8}
-            p={4}
-            sx={{
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, rgba(84,197,248,0.15) 0%, rgba(1,117,194,0.05) 100%)',
-              border: '1px solid rgba(84,197,248,0.3)',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '-30px',
-                right: '-30px',
-                width: '150px',
-                height: '150px',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(84,197,248,0.2) 0%, rgba(84,197,248,0) 70%)',
-                zIndex: 0
-              }}
-            />
-
-            <Box
-              display="flex"
-              flexDirection={{ xs: 'column', md: 'row' }}
-              justifyContent="space-between"
-              alignItems={{ xs: 'flex-start', md: 'center' }}
-              position="relative"
-              zIndex="1"
-            >
-              <Box flex="1" mr={{ xs: 0, md: 4 }} mb={{ xs: 3, md: 0 }}>
-                <Typography
-                  variant="h4"
-                  fontWeight="800"
+    <PageWrapper>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          py: { xs: 8, md: 10 },
+          background: 'radial-gradient(circle at 20% 20%, rgba(92,225,230,0.18), transparent 35%), radial-gradient(circle at 88% 18%, rgba(159,139,255,0.2), transparent 32%), radial-gradient(circle at 70% 80%, rgba(255,173,102,0.16), transparent 30%), linear-gradient(145deg, #0a0f1a 0%, #131726 45%, #191226 100%)',
+          color: '#edf2ff',
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        <Container maxWidth="lg">
+          <Fade in={true} timeout={950}>
+            <Box>
+              <Stack spacing={2} alignItems="center" textAlign="center" mb={7}>
+                <Chip
+                  label="Skill Constellation"
                   sx={{
-                    color: '#54C5F8',
-                    display: 'flex',
-                    alignItems: 'center'
+                    color: '#d0fff9',
+                    border: '1px solid rgba(92,225,230,0.45)',
+                    background: 'rgba(14,34,48,0.62)',
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    fontSize: '0.72rem',
+                    px: 1
+                  }}
+                />
+                <Typography
+                  variant="h2"
+                  sx={{
+                    fontFamily: '"Bebas Neue", "M PLUS 1p", sans-serif',
+                    letterSpacing: '0.06em',
+                    lineHeight: 0.95,
+                    fontSize: { xs: '3rem', md: '4.8rem' },
+                    textShadow: '0 12px 35px rgba(0,0,0,0.45)'
                   }}
                 >
-                  Flutter
-                  <Box
-                    component="span"
-                    sx={{
-                      ml: 2,
-                      fontSize: '0.55em',
-                      background: 'rgba(84,197,248,0.2)',
-                      p: '4px 12px',
-                      borderRadius: '20px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1px'
-                    }}
-                  >
-                    Primary Specialty
+                  Build, Decode,
+                  <Box component="span" sx={{ color: '#8be8ff', ml: 1.2 }}>
+                    Human Minds
                   </Box>
                 </Typography>
-
-                <Typography
-                  variant="body1"
-                  sx={{
-                    mt: 2,
-                    color: 'rgba(255,255,255,0.8)',
-                    maxWidth: '600px',
-                    lineHeight: 1.6
-                  }}
-                >
-                  {FLUTTER_SKILL.description} with extensive experience in creating performant,
-                  beautiful applications for both iOS and Android platforms. Specialized in complex
-                  animations, custom widgets, and state management solutions.
+                <Typography sx={{ maxWidth: 760, color: 'rgba(228,236,255,0.78)', lineHeight: 1.7 }}>
+                  The author is also a developer and a master of human psychology. My work combines
+                  product engineering with behavioral insight to build apps that are technically strong,
+                  emotionally intelligent, and designed around real human decisions.
                 </Typography>
-              </Box>
+              </Stack>
 
               <Box
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  background: 'rgba(0,0,0,0.2)',
-                  borderRadius: '50%',
-                  width: '90px',
-                  height: '90px',
-                  justifyContent: 'center',
-                  position: 'relative'
+                  mb: 9,
+                  p: { xs: 3, md: 4.5 },
+                  borderRadius: '26px',
+                  border: '1px solid rgba(92,225,230,0.35)',
+                  backdropFilter: 'blur(8px)',
+                  background: 'linear-gradient(130deg, rgba(13,28,44,0.88), rgba(24,17,38,0.86))',
+                  boxShadow: '0 24px 60px -34px rgba(0,0,0,0.8)'
                 }}
               >
-                <Typography
-                  variant="h4"
-                  fontWeight="bold"
-                  sx={{ color: '#54C5F8' }}
-                >
-                  {flutterProgress}%
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box mt={4} position="relative">
-              <LinearProgress
-                variant="determinate"
-                value={flutterProgress}
-                sx={{
-                  height: '1rem',
-                  borderRadius: '0.5rem',
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                  '& .MuiLinearProgress-bar': {
-                    background: 'linear-gradient(90deg, #54C5F8 0%, #0175C2 100%)',
-                    transition: 'transform 2s ease-out'
-                  }
-                }}
-              />
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  right: '10px',
-                  transform: 'translateY(-50%)',
-                  background: 'rgba(0,0,0,0.5)',
-                  borderRadius: '12px',
-                  padding: '2px 10px',
-                  zIndex: 2
-                }}
-              >
-                <Typography variant="body2" fontWeight="600" sx={{ color: '#fff' }}>
-                  Expert Level
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            mt={6}
-            mb={4}
-            sx={{
-              textAlign: 'center',
-              color: 'rgba(255,255,255,0.9)'
-            }}
-          >
-            Other Technical Skills
-          </Typography>
-
-          {/* Other Skills Categories */}
-          {skills.map((category, categoryIndex) => (
-            <Box key={categoryIndex} mb={6}>
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                mb={3}
-                className='text-gray-200'
-                sx={{
-                  borderLeft: '4px solid #3f51b5',
-                  pl: 2,
-                }}
-              >
-                {category.category}
-              </Typography>
-
-              <Grid container spacing={4}>
-                {category.skills.map((skill, skillIndex) => (
-                  <Grid item key={skillIndex} xs={12} sm={6}>
-                    <Box
-                      mb={1}
-                      display="flex"
-                      justifyContent="space-between"
+                <Grid container spacing={4} alignItems="center">
+                  <Grid item xs={12} md={8}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1.4,
+                        fontWeight: 700,
+                        letterSpacing: '0.02em'
+                      }}
                     >
-                      <Typography
-                        variant="h6"
-                        fontWeight="500"
-                      >
-                        {skill.name}
-                      </Typography>
-                      <Typography
-                        variant="body1"
+                      Flutter
+                      <Chip
+                        label="Primary Orbit"
+                        size="small"
                         sx={{
-                          color: getColorForLevel(skill.level),
-                          fontWeight: 600
+                          color: '#d1fbff',
+                          border: '1px solid rgba(92,225,230,0.5)',
+                          background: 'rgba(92,225,230,0.13)',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.09em'
                         }}
-                      >
-                        {skill.level}
+                      />
+                    </Typography>
+                    <Typography mt={2} sx={{ color: 'rgba(233,241,255,0.78)', lineHeight: 1.75 }}>
+                      {FLUTTER_SKILL.description}. I design smooth experiences with custom animation
+                      systems, scalable state patterns, and psychological UX patterns that improve flow,
+                      clarity, and user trust in production apps.
+                    </Typography>
+
+                    <Box mt={4}>
+                      <Typography sx={{ color: '#9deeff', mb: 1.2, fontSize: '0.82rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                        Performance Signal
                       </Typography>
-                    </Box>
-                    <Box position="relative">
                       <LinearProgress
                         variant="determinate"
-                        value={skill.progress}
+                        value={flutterProgress}
                         sx={{
-                          height: '0.6rem',
-                          borderRadius: '0.3rem',
-                          backgroundColor: 'rgba(255,255,255,0.1)',
+                          height: '0.95rem',
+                          borderRadius: '999px',
+                          backgroundColor: 'rgba(255,255,255,0.12)',
                           '& .MuiLinearProgress-bar': {
-                            background: `linear-gradient(90deg, ${getColorForLevel(skill.level)} 0%, #ffffff 100%)`,
-                            transition: 'transform 1.5s ease-out'
+                            borderRadius: '999px',
+                            background: 'linear-gradient(92deg, #5ce1e6 0%, #6fbcff 52%, #b59bff 100%)',
+                            transition: 'transform 1.8s ease-out'
                           }
                         }}
                       />
-                      <Typography
-                        variant="body2"
+                    </Box>
+                  </Grid>
+
+                  <Grid item xs={12} md={4}>
+                    <Box display="flex" justifyContent="center">
+                      <Box
                         sx={{
-                          position: 'absolute',
-                          right: '0',
-                          top: '-1.5rem',
-                          color: 'rgba(255,255,255,0.8)',
+                          width: 170,
+                          height: 170,
+                          borderRadius: '50%',
+                          p: '10px',
+                          background: `conic-gradient(#5ce1e6 ${flutterProgress * 3.6}deg, rgba(255,255,255,0.12) 0deg)`,
+                          boxShadow: '0 0 34px rgba(92,225,230,0.28)'
                         }}
                       >
-                        {skill.progress}%
+                        <Box
+                          sx={{
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: '50%',
+                            background: 'linear-gradient(155deg, #0f1728 0%, #13182a 100%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexDirection: 'column',
+                            border: '1px solid rgba(255,255,255,0.11)'
+                          }}
+                        >
+                          <Typography variant="h3" fontWeight={800} sx={{ color: '#93f4ff', lineHeight: 1 }}>
+                            {flutterProgress}%
+                          </Typography>
+                          <Typography sx={{ fontSize: '0.75rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(220,240,255,0.7)' }}>
+                            Orbit Sync
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <Grid container spacing={3.2}>
+                {skills.map((category, categoryIndex) => (
+                  <Grid item xs={12} md={6} key={category.category}>
+                    <Box
+                      sx={{
+                        height: '100%',
+                        p: 3,
+                        borderRadius: '22px',
+                        border: '1px solid rgba(255,255,255,0.13)',
+                        background: 'linear-gradient(150deg, rgba(12,19,32,0.9), rgba(18,18,30,0.84))',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          right: -28,
+                          top: -18,
+                          width: 120,
+                          height: 120,
+                          borderRadius: '50%',
+                          background: `radial-gradient(circle, ${getCategoryGlow(categoryIndex)} 0%, rgba(255,255,255,0) 70%)`
+                        }}
+                      />
+
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          mb: 3,
+                          fontWeight: 700,
+                          fontSize: '1.2rem',
+                          position: 'relative',
+                          pr: 4
+                        }}
+                      >
+                        {category.category}
                       </Typography>
+
+                      <Stack spacing={2.25}>
+                        {category.skills.map((skill) => (
+                          <Box key={skill.name}>
+                            <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+                              <Typography sx={{ fontWeight: 600, color: '#e8eeff' }}>{skill.name}</Typography>
+                              <Chip
+                                label={skill.level}
+                                size="small"
+                                sx={{
+                                  color: '#ffffff',
+                                  background: getColorForLevel(skill.level),
+                                  fontWeight: 700,
+                                  letterSpacing: '0.02em'
+                                }}
+                              />
+                            </Box>
+
+                            <Box sx={{ position: 'relative' }}>
+                              <LinearProgress
+                                variant="determinate"
+                                value={skill.progress}
+                                sx={{
+                                  height: '0.78rem',
+                                  borderRadius: '999px',
+                                  backgroundColor: 'rgba(255,255,255,0.1)',
+                                  '& .MuiLinearProgress-bar': {
+                                    borderRadius: '999px',
+                                    background: `linear-gradient(90deg, ${getColorForLevel(skill.level)} 0%, #f6fbff 100%)`,
+                                    transition: 'transform 1.45s ease-out'
+                                  }
+                                }}
+                              />
+                              <Typography
+                                sx={{
+                                  position: 'absolute',
+                                  right: 8,
+                                  top: '50%',
+                                  transform: 'translateY(-50%)',
+                                  fontWeight: 700,
+                                  fontSize: '0.73rem',
+                                  color: '#0f1625'
+                                }}
+                              >
+                                {skill.progress}%
+                              </Typography>
+                            </Box>
+                          </Box>
+                        ))}
+                      </Stack>
                     </Box>
                   </Grid>
                 ))}
               </Grid>
             </Box>
-          ))}
-        </div>
-      </Fade>
-    </Container>
+          </Fade>
+        </Container>
+      </Box>
+    </PageWrapper>
   );
 };
 
