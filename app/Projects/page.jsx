@@ -13,7 +13,7 @@ const Projects = () => {
           {/* HWC App */}
           <div className="mb-12 rounded-xl overflow-hidden bg-black/60 shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 backdrop-blur-sm border border-gray-800">
             <div className="p-6 border-b border-gray-800">
-              <h3 className="text-2xl font-bold text-white">HWC - Hospital Management</h3>
+              <h3 className="text-2xl font-bold text-white">HWC</h3>
             </div>
             <div className="flex flex-col lg:flex-row">
               <div className="w-full lg:w-2/5 p-6">

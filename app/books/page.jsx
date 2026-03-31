@@ -33,9 +33,9 @@ const Books = () => {
             reviews: 55,
             description: 'Mastering the Perfect Lie is a bold and insightful guide into the art of deception. Blending psychology, real-life examples, and practical techniques, this book teaches you how to craft convincing lies, avoid getting caught, and detect dishonesty in others. A must-read for anyone curious about the hidden dynamics of truth and deception in everyday life.',
             image: finalcover,
-            amazonLink: 'https://amzn.in/d/bSeEfeq',
+            amazonLink: 'https://amzn.in/d/0bU8Ffi6',
             pothyLink: 'https://store.pothi.com/book/abhijith-shaji-perfect-lie/',
-            flipkartLink: 'https://store.pothi.com/book/abhijith-shaji-perfect-lie/',
+            flipkartLink: 'https://dl.flipkart.com/s/FNKj6luuuN',
             isPublished: true
         },
         {
