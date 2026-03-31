@@ -3,75 +3,77 @@
 import { Box, Container, Fade, Grid, LinearProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-const Skills = () => {
-  // Flutter skill highlighted at the top, separate from categories
-  const flutterSkill = {
-    name: 'Flutter',
-    level: 'Expert',
-    progress: 0,
-    finalProgress: 98,
-    featured: true,
-    description: 'Cross-platform app development with advanced UI components'
-  };
+const FLUTTER_SKILL = {
+  name: 'Flutter',
+  level: 'Expert',
+  progress: 0,
+  finalProgress: 98,
+  featured: true,
+  description: 'Cross-platform app development with advanced UI components'
+};
 
+const SKILL_CATEGORIES = [
+  {
+    category: "Other Mobile Technologies",
+    skills: [
+      { name: 'React Native', level: 'Proficient', progress: 0, finalProgress: 70 },
+      { name: 'Dart', level: 'Expert', progress: 0, finalProgress: 95 },
+    ]
+  },
+  {
+    category: "Frontend Development",
+    skills: [
+      { name: 'JavaScript', level: 'Advanced', progress: 0, finalProgress: 85 },
+      { name: 'React.js', level: 'Expert', progress: 0, finalProgress: 90 },
+      { name: 'Vue.js', level: 'Proficient', progress: 0, finalProgress: 75 },
+      { name: 'HTML/CSS', level: 'Expert', progress: 0, finalProgress: 95 },
+    ]
+  },
+  {
+    category: "UI Frameworks & Tools",
+    skills: [
+      { name: 'Tailwind CSS', level: 'Proficient', progress: 0, finalProgress: 80 },
+      { name: 'Material UI', level: 'Advanced', progress: 0, finalProgress: 85 },
+    ]
+  },
+  {
+    category: "Backend & Frameworks",
+    skills: [
+      { name: 'Next.js', level: 'Advanced', progress: 0, finalProgress: 85 },
+      { name: 'Node.js', level: 'Proficient', progress: 0, finalProgress: 75 },
+    ]
+  },
+  {
+    category: "Development Tools",
+    skills: [
+      { name: 'Git', level: 'Advanced', progress: 0, finalProgress: 85 },
+      { name: 'CI/CD', level: 'Proficient', progress: 0, finalProgress: 75 },
+    ]
+  }
+];
+
+const Skills = () => {
   const [flutterProgress, setFlutterProgress] = useState(0);
 
-  const skillCategories = [
-    {
-      category: "Other Mobile Technologies",
-      skills: [
-        { name: 'React Native', level: 'Proficient', progress: 0, finalProgress: 70 },
-        { name: 'Dart', level: 'Expert', progress: 0, finalProgress: 95 },
-      ]
-    },
-    {
-      category: "Frontend Development",
-      skills: [
-        { name: 'JavaScript', level: 'Advanced', progress: 0, finalProgress: 85 },
-        { name: 'React.js', level: 'Expert', progress: 0, finalProgress: 90 },
-        { name: 'Vue.js', level: 'Proficient', progress: 0, finalProgress: 75 },
-        { name: 'HTML/CSS', level: 'Expert', progress: 0, finalProgress: 95 },
-      ]
-    },
-    {
-      category: "UI Frameworks & Tools",
-      skills: [
-        { name: 'Tailwind CSS', level: 'Proficient', progress: 0, finalProgress: 80 },
-        { name: 'Material UI', level: 'Advanced', progress: 0, finalProgress: 85 },
-      ]
-    },
-    {
-      category: "Backend & Frameworks",
-      skills: [
-        { name: 'Next.js', level: 'Advanced', progress: 0, finalProgress: 85 },
-        { name: 'Node.js', level: 'Proficient', progress: 0, finalProgress: 75 },
-      ]
-    },
-    {
-      category: "Development Tools",
-      skills: [
-        { name: 'Git', level: 'Advanced', progress: 0, finalProgress: 85 },
-        { name: 'CI/CD', level: 'Proficient', progress: 0, finalProgress: 75 },
-      ]
-    }
-  ];
-
-  const [skills, setSkills] = useState(skillCategories.map(category => ({
+  const [skills, setSkills] = useState(SKILL_CATEGORIES.map(category => ({
     ...category,
     skills: category.skills.map(skill => ({ ...skill }))
   })));
 
   useEffect(() => {
+    const timers = [];
+
     // Animate Flutter first with priority
     const flutterTimer = setTimeout(() => {
-      setFlutterProgress(flutterSkill.finalProgress);
+      setFlutterProgress(FLUTTER_SKILL.finalProgress);
     }, 300);
+    timers.push(flutterTimer);
 
     // Initial delay before starting other animations
     const initialDelay = 800;
 
     // Animate other skills with a staggered delay
-    skills.forEach((category, categoryIndex) => {
+    SKILL_CATEGORIES.forEach((category, categoryIndex) => {
       category.skills.forEach((skill, skillIndex) => {
         const timer = setTimeout(() => {
           setSkills(prevSkills => {
@@ -80,12 +82,13 @@ const Skills = () => {
             return newSkills;
           });
         }, initialDelay + (categoryIndex * 200) + (skillIndex * 100));
-
-        return () => clearTimeout(timer);
+        timers.push(timer);
       });
     });
 
-    return () => clearTimeout(flutterTimer);
+    return () => {
+      timers.forEach(clearTimeout);
+    };
   }, []);
 
   const getColorForLevel = (level) => {
@@ -194,7 +197,7 @@ const Skills = () => {
                     lineHeight: 1.6
                   }}
                 >
-                  {flutterSkill.description} with extensive experience in creating performant,
+                  {FLUTTER_SKILL.description} with extensive experience in creating performant,
                   beautiful applications for both iOS and Android platforms. Specialized in complex
                   animations, custom widgets, and state management solutions.
                 </Typography>

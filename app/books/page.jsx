@@ -102,7 +102,7 @@ const Books = () => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
                     >
-                        <h2 className="text-2xl font-display font-semibold text-stone-200 mb-4">From the Artist's Desk</h2>
+                        <h2 className="text-2xl font-display font-semibold text-stone-200 mb-4">From the Artist&apos;s Desk</h2>
                         <p className="text-lg text-stone-300 leading-relaxed">
                             As a <b className="text-white">writer</b>, <b className="text-white">photographer</b>, and <b className="text-white">developer</b>, I explore the spaces between light and shadow, code and prose. These works are artifacts of that exploration, each a piece of a larger narrative.
                         </p>
