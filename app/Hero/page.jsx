@@ -286,7 +286,7 @@ const Hero = () => {
   }, [isBrowser]);
 
   return (
-    <div ref={containerRef} className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
+    <div id="home" ref={containerRef} className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
       {/* Dynamic background with code patterns */}
       <div className="absolute inset-0 z-0 opacity-10">
         <div className="absolute inset-0" style={{
