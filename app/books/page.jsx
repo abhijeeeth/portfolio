@@ -5,6 +5,7 @@ import { FaAmazon, FaBookOpen, FaLock, FaSatelliteDish, FaRegClock, FaStar, FaSt
 import { motion } from 'framer-motion';
 import finalcover from '../images/finalcover.png';
 import finalcover2 from '../images/cover.png';
+import enikettavumPriyapettaAryakk from '../images/Enikettavum Priyapetta Aryakk.png';
 import { PageWrapper } from '../Components/PageWrap';
 
 const Books = () => {
@@ -42,6 +43,12 @@ const Books = () => {
         },
         {
             id: 3,
+            title: 'Enik ettavum Priyapette',
+            image: enikettavumPriyapettaAryakk,
+            isPublished: false
+        },
+        {
+            id: 5,
             title: 'How to Bury Someone',
             isPublished: false
         },
@@ -49,7 +56,7 @@ const Books = () => {
             id: 4,
             title: 'Raksha',
             isPublished: false
-        }
+        },
     ];
 
     const renderStars = (rating) => {
@@ -153,14 +160,34 @@ const Books = () => {
                                             />
                                         </div>
                                     ) : (
-                                        <div className="mx-auto flex h-[300px] w-[210px] flex-col items-center justify-center rounded-2xl border border-dashed border-[#4f72bb] bg-[#07162f] px-5 text-center md:mx-0 md:h-[330px] md:w-[220px]">
-                                            <FaLock className="mb-4 text-3xl text-[#95b8ff]" />
-                                            <p className="text-lg text-[#d8e5ff]" style={{ fontFamily: "'Orbitron', sans-serif" }}>
-                                                ACCESS DENIED
-                                            </p>
-                                            <p className="mt-3 text-xs leading-relaxed text-[#9fb1d6]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                                                Manuscript under secure construction protocol.
-                                            </p>
+                                        <div className="group relative mx-auto h-[300px] w-[210px] overflow-hidden rounded-2xl border border-[#4a85ff]/60 bg-[#08152b] shadow-[0_12px_40px_-20px_rgba(0,226,255,0.45)] md:mx-0 md:h-[330px] md:w-[220px]">
+                                            {book.image ? (
+                                                <>
+                                                    <div className="absolute inset-0 z-10 bg-[linear-gradient(to_top,rgba(3,16,41,0.55),transparent_35%)]" />
+                                                    <Image
+                                                        src={book.image}
+                                                        alt={book.title}
+                                                        fill
+                                                        className="object-cover transition duration-500 group-hover:scale-[1.05]"
+                                                        sizes="(max-width: 768px) 210px, 220px"
+                                                    />
+                                                    <div className="absolute bottom-0 left-0 right-0 z-20 bg-[#050f22]/70 px-3 py-2 text-center backdrop-blur-sm">
+                                                        <p className="text-[11px] uppercase tracking-[0.18em] text-[#b8ccff]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                            In Progress
+                                                        </p>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className="flex h-full flex-col items-center justify-center border border-dashed border-transparent px-5 text-center">
+                                                    <FaLock className="mb-4 text-3xl text-[#95b8ff]" />
+                                                    <p className="text-lg text-[#d8e5ff]" style={{ fontFamily: "'Orbitron', sans-serif" }}>
+                                                        ACCESS DENIED
+                                                    </p>
+                                                    <p className="mt-3 text-xs leading-relaxed text-[#9fb1d6]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                        Manuscript under secure construction protocol.
+                                                    </p>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
 
