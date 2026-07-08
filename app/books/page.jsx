@@ -43,13 +43,8 @@ const Books = () => {
         },
         {
             id: 3,
-            title: 'Enik ettavum Priyapette',
+            title: 'Enikettavum Priyapetta Aryakk',
             image: enikettavumPriyapettaAryakk,
-            isPublished: false
-        },
-        {
-            id: 5,
-            title: 'How to Bury Someone',
             isPublished: false
         },
         {
@@ -57,6 +52,11 @@ const Books = () => {
             title: 'Raksha',
             isPublished: false
         },
+        // {
+        //     id: 5,
+        //     title: 'How to Bury Someone',
+        //     isPublished: false
+        // },
     ];
 
     const renderStars = (rating) => {
@@ -82,74 +82,65 @@ const Books = () => {
         <PageWrapper>
             <section
                 id="books"
-                className="books-grid relative min-h-screen overflow-hidden bg-[#04070f] text-[#d8e4ff]"
+                className="books-grid relative min-h-screen overflow-hidden bg-[#0b0d10] text-[#f5f5f2]"
             >
-                <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-[#02f4ff]/20 blur-[130px]" />
-                    <div className="absolute right-[-80px] top-[20%] h-96 w-96 rounded-full bg-[#6eff3b]/10 blur-[130px]" />
-                    <div className="absolute bottom-[-120px] left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-[#3f66ff]/20 blur-[140px]" />
-                </div>
-                <div className="scan-line pointer-events-none absolute inset-0 opacity-60" />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_40%)]" />
 
-                <div className="relative z-10 mx-auto max-w-7xl px-5 pb-24 pt-24 sm:px-8 lg:px-10">
+                <div className="relative z-10 mx-auto max-w-6xl px-4 pb-20 pt-20 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, ease: 'easeOut' }}
-                        className="mx-auto max-w-5xl text-center"
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        className="mx-auto max-w-3xl text-center"
                     >
-                        <p className="inline-flex items-center gap-2 rounded-full border border-[#00e2ff]/50 bg-[#02152e]/80 px-5 py-2 text-xs uppercase tracking-[0.34em] text-[#7cf7ff]">
+                        <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-white/70">
                             <FaSatelliteDish />
-                            Neural Library Protocol
+                            Books
                         </p>
-                        <h1 className="mt-6 text-4xl font-semibold leading-[1.05] text-[#e5f4ff] sm:text-6xl lg:text-7xl" style={{ fontFamily: "'Orbitron', sans-serif" }}>
-                            STORY ARCHIVE
-                            <br />
-                            // FUTURE MODE
+                        <h1 className="mt-5 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                            A quiet shelf of work
                         </h1>
-                        <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-[#a9b9da] sm:text-base" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                            Enter a cinematic shelf of psychological warfare, control, and perception. Each release is
-                            treated as a mission file, each draft as an encrypted transmission waiting to be unlocked.
+                        <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
+                            A minimal, editorial presentation of published titles and work in progress. The focus stays
+                            on the books, their covers, and their status.
                         </p>
                     </motion.div>
 
                     <motion.div
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
-                        className="mx-auto mt-10 grid max-w-5xl gap-4 rounded-3xl border border-[#3f66ff]/35 bg-[#030c1f]/80 p-4 backdrop-blur-md sm:grid-cols-3"
+                        transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                        className="mx-auto mt-10 grid max-w-4xl gap-4 rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm sm:grid-cols-3"
                     >
-                        <div className="rounded-2xl border border-[#00d1ff]/30 bg-[#05132a]/80 p-4 text-center">
-                            <p className="text-xs uppercase tracking-[0.2em] text-[#78d8ff]">Published Nodes</p>
-                            <p className="mt-2 text-4xl text-[#dffbff]" style={{ fontFamily: "'Orbitron', sans-serif" }}>{publishedBooks.length}</p>
+                        <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-center">
+                            <p className="text-[11px] uppercase tracking-[0.2em] text-white/50">Published</p>
+                            <p className="mt-2 text-3xl font-semibold text-white">{publishedBooks.length}</p>
                         </div>
-                        <div className="rounded-2xl border border-[#93ff5e]/30 bg-[#081a21]/80 p-4 text-center">
-                            <p className="text-xs uppercase tracking-[0.2em] text-[#b2ff98]">In Build Queue</p>
-                            <p className="mt-2 text-4xl text-[#eeffe2]" style={{ fontFamily: "'Orbitron', sans-serif" }}>{inProgressBooks.length}</p>
+                        <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-center">
+                            <p className="text-[11px] uppercase tracking-[0.2em] text-white/50">In progress</p>
+                            <p className="mt-2 text-3xl font-semibold text-white">{inProgressBooks.length}</p>
                         </div>
-                        <div className="rounded-2xl border border-[#ae94ff]/30 bg-[#110b24]/80 p-4 text-center">
-                            <p className="text-xs uppercase tracking-[0.2em] text-[#c7b6ff]">Active Reviews</p>
-                            <p className="mt-2 text-4xl text-[#f2ecff]" style={{ fontFamily: "'Orbitron', sans-serif" }}>
+                        <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-center">
+                            <p className="text-[11px] uppercase tracking-[0.2em] text-white/50">Reviews</p>
+                            <p className="mt-2 text-3xl font-semibold text-white">
                                 {publishedBooks.reduce((sum, book) => sum + book.reviews, 0)}
                             </p>
                         </div>
                     </motion.div>
 
-                    <div className="mt-14 space-y-8">
+                    <div className="mt-14 space-y-6">
                         {books.map((book, idx) => (
                             <motion.article
                                 key={book.id}
                                 initial={{ opacity: 0, y: 26 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.2 }}
-                                transition={{ duration: 0.6, delay: idx * 0.08, ease: 'easeOut' }}
-                                className="relative overflow-hidden rounded-3xl border border-[#28467f]/70 bg-[#030d21]/90 p-[1px] shadow-[0_20px_80px_-40px_rgba(2,244,255,0.35)]"
+                                transition={{ duration: 0.5, delay: idx * 0.06, ease: 'easeOut' }}
+                                className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] shadow-[0_18px_60px_-40px_rgba(0,0,0,0.8)]"
                             >
-                                <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(0,226,255,0.2),transparent_45%,rgba(110,255,59,0.14))]" />
-                                <div className="relative grid gap-6 rounded-[1.45rem] bg-[#041029]/95 p-5 md:grid-cols-[220px_1fr] md:gap-8 md:p-7">
+                                <div className="relative grid gap-6 p-5 md:grid-cols-[220px_1fr] md:gap-8 md:p-7">
                                     {book.isPublished ? (
-                                        <div className="group relative mx-auto h-[300px] w-[210px] overflow-hidden rounded-2xl border border-[#4a85ff]/60 bg-[#08152b] shadow-[0_12px_40px_-20px_rgba(0,226,255,0.45)] md:mx-0 md:h-[330px] md:w-[220px]">
-                                            <div className="absolute inset-0 z-10 bg-[linear-gradient(to_top,rgba(3,16,41,0.55),transparent_35%)]" />
+                                        <div className="group relative mx-auto h-[300px] w-[210px] overflow-hidden rounded-2xl border border-white/10 bg-black/20 md:mx-0 md:h-[330px] md:w-[220px]">
                                             <Image
                                                 src={book.image}
                                                 alt={book.title}
@@ -160,10 +151,9 @@ const Books = () => {
                                             />
                                         </div>
                                     ) : (
-                                        <div className="group relative mx-auto h-[300px] w-[210px] overflow-hidden rounded-2xl border border-[#4a85ff]/60 bg-[#08152b] shadow-[0_12px_40px_-20px_rgba(0,226,255,0.45)] md:mx-0 md:h-[330px] md:w-[220px]">
+                                        <div className="group relative mx-auto h-[300px] w-[210px] overflow-hidden rounded-2xl border border-white/10 bg-black/20 md:mx-0 md:h-[330px] md:w-[220px]">
                                             {book.image ? (
                                                 <>
-                                                    <div className="absolute inset-0 z-10 bg-[linear-gradient(to_top,rgba(3,16,41,0.55),transparent_35%)]" />
                                                     <Image
                                                         src={book.image}
                                                         alt={book.title}
@@ -171,20 +161,20 @@ const Books = () => {
                                                         className="object-cover transition duration-500 group-hover:scale-[1.05]"
                                                         sizes="(max-width: 768px) 210px, 220px"
                                                     />
-                                                    <div className="absolute bottom-0 left-0 right-0 z-20 bg-[#050f22]/70 px-3 py-2 text-center backdrop-blur-sm">
-                                                        <p className="text-[11px] uppercase tracking-[0.18em] text-[#b8ccff]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                                                            In Progress
+                                                    <div className="absolute inset-x-0 bottom-0 z-20 bg-black/55 px-3 py-2 text-center backdrop-blur-sm">
+                                                        <p className="text-[11px] uppercase tracking-[0.18em] text-white/80">
+                                                            In progress
                                                         </p>
                                                     </div>
                                                 </>
                                             ) : (
-                                                <div className="flex h-full flex-col items-center justify-center border border-dashed border-transparent px-5 text-center">
-                                                    <FaLock className="mb-4 text-3xl text-[#95b8ff]" />
-                                                    <p className="text-lg text-[#d8e5ff]" style={{ fontFamily: "'Orbitron', sans-serif" }}>
-                                                        ACCESS DENIED
+                                                <div className="flex h-full flex-col items-center justify-center px-5 text-center">
+                                                    <FaLock className="mb-4 text-2xl text-white/35" />
+                                                    <p className="text-sm uppercase tracking-[0.2em] text-white/70">
+                                                        In progress
                                                     </p>
-                                                    <p className="mt-3 text-xs leading-relaxed text-[#9fb1d6]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                                                        Manuscript under secure construction protocol.
+                                                    <p className="mt-3 text-sm leading-relaxed text-white/45">
+                                                        Manuscript under construction.
                                                     </p>
                                                 </div>
                                             )}
@@ -195,34 +185,34 @@ const Books = () => {
                                         {book.isPublished ? (
                                             <>
                                                 <div>
-                                                    <p className="inline-flex rounded-full border border-[#00e2ff]/45 bg-[#041938] px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-[#8befff]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                    <p className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/60">
                                                         {book.category}
                                                     </p>
-                                                    <h2 className="mt-3 text-2xl leading-tight text-[#e6f6ff] sm:text-[2rem]" style={{ fontFamily: "'Orbitron', sans-serif" }}>
+                                                    <h2 className="mt-3 text-2xl leading-tight text-white sm:text-[2rem]">
                                                         {book.title}
                                                     </h2>
-                                                    <p className="mt-2 text-sm text-[#9db0d9]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                    <p className="mt-2 text-sm text-white/55">
                                                         by {book.author}
                                                     </p>
                                                 </div>
 
                                                 <div className="mt-4 flex items-center justify-center gap-3 md:justify-start">
                                                     <div className="flex items-center gap-1">{renderStars(book.rating)}</div>
-                                                    <span className="text-xs uppercase tracking-[0.12em] text-[#95a8d4]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                    <span className="text-[11px] uppercase tracking-[0.12em] text-white/45">
                                                         {book.rating.toFixed(1)} score / {book.reviews} logs
                                                     </span>
                                                 </div>
 
-                                                <p className="mt-5 max-w-3xl text-sm leading-relaxed text-[#aec0e8] sm:text-[15px]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                <p className="mt-5 max-w-3xl text-sm leading-7 text-white/70 sm:text-[15px]">
                                                     {book.description}
                                                 </p>
 
-                                                <div className="mt-7 flex flex-wrap justify-center gap-3 md:justify-start" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                <div className="mt-7 flex flex-wrap justify-center gap-3 md:justify-start">
                                                     <a
                                                         href={book.amazonLink}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 rounded-lg border border-[#00e2ff]/50 bg-[#03233b] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#b9f9ff] transition duration-300 hover:-translate-y-0.5 hover:bg-[#063a5e]"
+                                                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-white/80 transition duration-300 hover:border-white/20 hover:bg-white/10"
                                                     >
                                                         <FaAmazon />
                                                         Amazon
@@ -231,7 +221,7 @@ const Books = () => {
                                                         href={book.flipkartLink}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 rounded-lg border border-[#7bff5e]/50 bg-[#132f18] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#d8ffd0] transition duration-300 hover:-translate-y-0.5 hover:bg-[#1a4623]"
+                                                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-white/80 transition duration-300 hover:border-white/20 hover:bg-white/10"
                                                     >
                                                         Flipkart
                                                     </a>
@@ -239,7 +229,7 @@ const Books = () => {
                                                         href={book.pothyLink}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 rounded-lg border border-[#6a8bff]/55 bg-[#111f45] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#d6e1ff] transition duration-300 hover:-translate-y-0.5 hover:bg-[#1a2d63]"
+                                                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-white/80 transition duration-300 hover:border-white/20 hover:bg-white/10"
                                                     >
                                                         <FaBookOpen />
                                                         Pothy
@@ -248,16 +238,15 @@ const Books = () => {
                                             </>
                                         ) : (
                                             <div className="my-auto">
-                                                <span className="inline-flex items-center gap-2 rounded-full border border-[#6f91d6]/55 bg-[#0a1f43] px-4 py-1 text-xs uppercase tracking-[0.16em] text-[#bdd4ff]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.16em] text-white/60">
                                                     <FaRegClock />
                                                     In Progress
                                                 </span>
-                                                <h3 className="mt-4 text-2xl text-[#e6efff]" style={{ fontFamily: "'Orbitron', sans-serif" }}>
+                                                <h3 className="mt-4 text-2xl text-white">
                                                     {book.title}
                                                 </h3>
-                                                <p className="mt-3 max-w-xl text-sm leading-relaxed text-[#9db4e0]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                                                    This story is currently in stealth production: character psychology,
-                                                    pacing simulations, and structural edits are still in flight.
+                                                <p className="mt-3 max-w-xl text-sm leading-7 text-white/55">
+                                                    This story is currently being shaped and refined.
                                                 </p>
                                             </div>
                                         )}
@@ -269,27 +258,10 @@ const Books = () => {
                 </div>
 
                 <style jsx global>{`
-                    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
                     .books-grid {
-                        background-image:
-                            linear-gradient(to right, rgba(28, 80, 170, 0.16) 1px, transparent 1px),
-                            linear-gradient(to bottom, rgba(28, 80, 170, 0.16) 1px, transparent 1px);
-                        background-size: 42px 42px;
-                    }
-
-                    .scan-line {
-                        background: linear-gradient(to bottom, transparent 0%, rgba(0, 226, 255, 0.16) 48%, transparent 100%);
-                        animation: scanMove 9s linear infinite;
-                    }
-
-                    @keyframes scanMove {
-                        0% {
-                            transform: translateY(-100%);
-                        }
-                        100% {
-                            transform: translateY(100%);
-                        }
+                        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                        background-size: 48px 48px;
                     }
                 `}</style>
             </section>
