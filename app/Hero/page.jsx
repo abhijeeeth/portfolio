@@ -722,7 +722,7 @@ const Hero = () => {
 
       {/* Replace the existing game section with the new Code Challenge Game */}
       <motion.div
-        className="absolute bottom-10 left-0 right-0 flex flex-col items-center justify-center z-20"
+        className="absolute bottom-10 left-0 right-0 hidden md:flex flex-col items-center justify-center z-20"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
