@@ -1,4 +1,118 @@
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@100;300;400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --ink: #17211f;
+    --paper: #e8e4d8;
+    --paper-deep: #d3cec0;
+    --acid: #d8f36a;
+    --coral: #e96d4d;
+    --line: rgba(23, 33, 31, 0.22);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    background: var(--paper);
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans), sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a,
+input,
+textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+    outline: 2px solid var(--coral);
+    outline-offset: 4px;
+}
+
+::selection {
+    background: var(--acid);
+    color: var(--ink);
+}
+
+.site-grid {
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+}
+
+.display-type {
+    font-family: var(--font-display), sans-serif;
+    letter-spacing: -0.07em;
+}
+
+.outline-type {
+    color: transparent;
+    -webkit-text-stroke: clamp(1px, 0.12vw, 2px) var(--paper);
+    text-shadow: 5px 5px 0 rgba(23, 33, 31, 0.2);
+}
+
+.eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.section-anchor {
+    scroll-margin-top: 6rem;
+}
+
+.editorial-rule {
+    border-top: 1px solid var(--line);
+}
+
+.photo-frame {
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-frame img {
+    transition: transform 700ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.photo-frame:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 640px) {
+    .site-grid {
+        background-size: 32px 32px;
+    }
+
+    .photo-frame:hover img {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
